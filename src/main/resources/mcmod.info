@@ -3,11 +3,13 @@
   "modid": "hytils",
   "name": "Hytils",
   "description": "Hypixel all-in-one QOL mod.",
-  "version": "0.9a",
+  "version": "0.10a",
   "mcversion": "${mcversion}",
   "url": "",
   "updateUrl": "",
-  "authorList": ["IWant2TryHard"],
+  "authorList": [
+    "IWant2TryHard"
+  ],
   "credits": "IWant2TryHard",
   "logoFile": "",
   "screenshots": [],

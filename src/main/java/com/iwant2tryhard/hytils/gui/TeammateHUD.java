@@ -9,7 +9,6 @@ import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.ScaledResolution;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemArmor;
-import net.minecraft.item.ItemFood;
 import net.minecraft.potion.Potion;
 import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.util.ResourceLocation;
@@ -17,12 +16,9 @@ import net.minecraftforge.client.event.RenderGameOverlayEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public class TeammateHUD extends Gui {
-    private List<String> cachedDisplayTeammates = new ArrayList<String>();
     private final ResourceLocation texBars = new ResourceLocation(Hytils.MODID, "textures/bars.png");
 
     @SubscribeEvent
@@ -34,9 +30,9 @@ public class TeammateHUD extends Gui {
             float height = resolution.getScaledHeight();
 
             List<String> displayTeammates = Hytils.instance.getUtils().displayTeammates;
+            List<String> cachedDisplayTeammates = new ArrayList<String>();
 
             if (!Hytils.instance.getConfig().teammateHUDShowUndetected){
-                cachedDisplayTeammates.clear();
                 for (String cachedName : displayTeammates) {
                     EntityPlayer comparePlayer = null;
                     for (EntityPlayer player: Hytils.instance.mc.theWorld.playerEntities) {

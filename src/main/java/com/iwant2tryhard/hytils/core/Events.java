@@ -1,32 +1,22 @@
 package com.iwant2tryhard.hytils.core;
 
 import com.iwant2tryhard.hytils.Hytils;
-import jdk.nashorn.internal.ir.Block;
-import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiDownloadTerrain;
-import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.culling.Frustum;
 import net.minecraft.entity.item.EntityTNTPrimed;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.init.Blocks;
-import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.BlockPos;
 import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.EnumChatFormatting;
 import net.minecraftforge.client.event.ClientChatReceivedEvent;
-import net.minecraftforge.client.event.GuiOpenEvent;
 import net.minecraftforge.client.event.RenderWorldLastEvent;
-import net.minecraftforge.event.entity.EntityJoinWorldEvent;
 import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
 
-import javax.swing.text.html.parser.Entity;
-import java.awt.*;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 
 public class Events {
     Frustum frustum = new Frustum();
@@ -119,20 +109,20 @@ public class Events {
     @SubscribeEvent(priority = EventPriority.NORMAL)
     public void onTickClient(TickEvent.ClientTickEvent event){
         if (Hytils.instance.getUtils().lastPlayerInteractedTimer <= 0){
-            Hytils.instance.getUtils().lastPlayerNameAttacker = null;
-            Hytils.instance.getUtils().lastPlayerNameAttacked = null;
+            Hytils.instance.getUtils().lastPlayerNameInteracted = null;
         }
 
         if (Hytils.instance.mc.thePlayer != null){
             if (Hytils.instance.mc.thePlayer.getLastAttacker() != null){
                 if (Hytils.instance.mc.thePlayer.getLastAttacker() instanceof EntityPlayer){
                     String name = ((EntityPlayer)Hytils.instance.mc.thePlayer.getLastAttacker()).getDisplayNameString();
-                    if (name.startsWith("\u00a7")){
+                    if (name.startsWith("\u00a7")) {
                         name = name.replace("\u00a7", "");
                         name = name.substring(1);
                     }
-                    if (!Objects.equals(name, Hytils.instance.getUtils().lastPlayerNameAttacker)){
+                    if (!name.equals(Hytils.instance.getUtils().lastPlayerNameAttacker)) {
                         Hytils.instance.getUtils().lastPlayerNameAttacker = name;
+                        Hytils.instance.getUtils().lastPlayerNameInteracted = name;
                         Hytils.instance.getUtils().lastPlayerInteractedTimer = 100;
                     }
                 }
@@ -141,12 +131,13 @@ public class Events {
             if (Hytils.instance.mc.thePlayer.func_94060_bK() != null){
                 if (Hytils.instance.mc.thePlayer.func_94060_bK() instanceof EntityPlayer){
                     String name = ((EntityPlayer)Hytils.instance.mc.thePlayer.func_94060_bK()).getDisplayNameString();
-                    if (name.startsWith("\u00a7")){
+                    if (name.startsWith("\u00a7")) {
                         name = name.replace("\u00a7", "");
                         name = name.substring(1);
                     }
-                    if (!Objects.equals(name, Hytils.instance.getUtils().lastPlayerNameAttacked)){
+                    if (!name.equals(Hytils.instance.getUtils().lastPlayerNameAttacked)) {
                         Hytils.instance.getUtils().lastPlayerNameAttacked = name;
+                        Hytils.instance.getUtils().lastPlayerNameInteracted = name;
                         Hytils.instance.getUtils().lastPlayerInteractedTimer = 100;
                     }
                 }

@@ -30,14 +30,14 @@ import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 public class Hytils
 {
     public static final String MODID = "hytils";
-    public static final String VERSION = "0.9a";
+    public static final String VERSION = "0.10a";
 
     @Mod.Instance(Hytils.MODID)
     public static Hytils instance;
 
     public Minecraft mc = Minecraft.getMinecraft();
 
-    private Utils utils = new Utils();
+    private final Utils utils = new Utils();
     private MainConfig config;
 
     @EventHandler

@@ -1,7 +1,6 @@
 package com.iwant2tryhard.hytils.core;
 
 import com.iwant2tryhard.hytils.Hytils;
-import jdk.nashorn.internal.ir.Block;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.item.EntityTNTPrimed;
@@ -25,8 +24,8 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 public class Utils {
-    private static String COMPASS_NAME = EnumChatFormatting.GREEN+"Game Menu "+EnumChatFormatting.GRAY+"(Right Click)";
-    private static String COMPASS_LORE = EnumChatFormatting.DARK_PURPLE.toString()+EnumChatFormatting.ITALIC.toString()+EnumChatFormatting.GRAY+"Right Click to bring up the Game Menu!";
+    private static final String COMPASS_NAME = EnumChatFormatting.GREEN + "Game Menu " + EnumChatFormatting.GRAY + "(Right Click)";
+    private static final String COMPASS_LORE = EnumChatFormatting.DARK_PURPLE.toString() + EnumChatFormatting.ITALIC + EnumChatFormatting.GRAY + "Right Click to bring up the Game Menu!";
     private boolean inHypixelLobby = false;
     private boolean onHypixel = false;
 
@@ -44,8 +43,9 @@ public class Utils {
 
     public int displayTimes = 0;
 
-    private Random rnd = new Random();
+    private final Random rnd = new Random();
 
+    public String lastPlayerNameInteracted = null;
     public String lastPlayerNameAttacker = null;
     public String lastPlayerNameAttacked = null;
     public int lastPlayerInteractedTimer = 0;
