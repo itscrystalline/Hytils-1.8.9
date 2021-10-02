@@ -1,5 +1,5 @@
 {
-  "package": "com.iwant2tryhard.hytils.mixins",
+  "required": true,
   "refmap": "mixins.hytils.refmap.json",
   "compatibilityLevel": "JAVA_8",
   "verbose": true,

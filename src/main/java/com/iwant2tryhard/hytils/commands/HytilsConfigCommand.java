@@ -26,22 +26,7 @@ public class HytilsConfigCommand extends CommandBase {
     @Override
     public void processCommand(ICommandSender sender, String[] args) throws CommandException {
         if (args.length > 0){
-            if ("setmaxshowteammates".equalsIgnoreCase(args[0]) || "smst".equalsIgnoreCase(args[0])) {
-                if (args.length > 1) {
-                    try {
-                        int num = Integer.parseInt(args[1]);
-                        if (num > 0) {
-                            Hytils.instance.getConfig().maxTeammateDisplay = num;
-                            Utils.sendMessage(new ChatComponentText(EnumChatFormatting.GOLD + "[Hytils] " + EnumChatFormatting.GREEN + "Set max display teammates to " + num));
-                            Hytils.instance.getConfig().saveConfig();
-                        } else {
-                            Utils.sendMessage(new ChatComponentText(EnumChatFormatting.GOLD + "[Hytils] " + EnumChatFormatting.RED + "Number must be more than 0!"));
-                        }
-                    } catch (NumberFormatException e) {
-                        Utils.sendMessage(new ChatComponentText(EnumChatFormatting.GOLD + "[Hytils] " + EnumChatFormatting.RED + "Invalid Number '" + args[0] + "'"));
-                    }
-                }
-            } else if ("teammatehud".equalsIgnoreCase(args[0]) || "thud".equalsIgnoreCase(args[0])) {
+            if ("teammatehud".equalsIgnoreCase(args[0]) || "thud".equalsIgnoreCase(args[0])) {
                 if (args.length > 1) {
                     if ("enabled".equalsIgnoreCase(args[1])) {
                         Hytils.instance.getConfig().teammateHUDEnabled = !Hytils.instance.getConfig().teammateHUDEnabled;
@@ -71,6 +56,21 @@ public class HytilsConfigCommand extends CommandBase {
                         Hytils.instance.getConfig().teammateHUDShowUndetected = !Hytils.instance.getConfig().teammateHUDShowUndetected;
                         Utils.sendMessage(new ChatComponentText(EnumChatFormatting.GOLD + "[Hytils] " + EnumChatFormatting.GREEN + "Updated Teammate HUD Show Undetected to " + Hytils.instance.getConfig().teammateHUDShowUndetected));
                         Hytils.instance.getConfig().saveConfig();
+                    } else if ("smst".equalsIgnoreCase(args[1]) | "smdt".equalsIgnoreCase(args[1]) | "setmaxshowteammates".equalsIgnoreCase(args[1]) | "setmaxdisplayteammates".equalsIgnoreCase(args[1])) {
+                        if (args.length > 2) {
+                            try {
+                                int num = Integer.parseInt(args[2]);
+                                if (num > 0) {
+                                    Hytils.instance.getConfig().maxTeammateDisplay = num;
+                                    Utils.sendMessage(new ChatComponentText(EnumChatFormatting.GOLD + "[Hytils] " + EnumChatFormatting.GREEN + "Set max display teammates to " + num));
+                                    Hytils.instance.getConfig().saveConfig();
+                                } else {
+                                    Utils.sendMessage(new ChatComponentText(EnumChatFormatting.GOLD + "[Hytils] " + EnumChatFormatting.RED + "Number must be more than 0!"));
+                                }
+                            } catch (NumberFormatException e) {
+                                Utils.sendMessage(new ChatComponentText(EnumChatFormatting.GOLD + "[Hytils] " + EnumChatFormatting.RED + "Invalid Number '" + args[2] + "'"));
+                            }
+                        }
                     } else {
                         Utils.sendMessage(new ChatComponentText(EnumChatFormatting.GOLD + "[Hytils] " + EnumChatFormatting.RED + "Invalid argument '" + args[1] + "'"));
                     }
@@ -101,7 +101,7 @@ public class HytilsConfigCommand extends CommandBase {
                 }
             }
         }else{
-            //open config gui
+            Hytils.instance.setShowConfigScreen(true);
         }
     }
 

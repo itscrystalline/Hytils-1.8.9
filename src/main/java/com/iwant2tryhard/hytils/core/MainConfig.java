@@ -11,7 +11,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 
 public class MainConfig {
-    private File configFile;
+    private final File configFile;
     private JsonObject loadedConfig = new JsonObject();
 
     public int maxTeammateDisplay = 4;
@@ -80,12 +80,12 @@ public class MainConfig {
             loadedConfig.addProperty("teammateHUDHungerBar", teammateHUDHungerBar);
             loadedConfig.addProperty("teammateHUDArmorBar", teammateHUDArmorBar);
             loadedConfig.addProperty("teammateHUDAirBar", teammateHUDAirBar);
+            loadedConfig.addProperty("teammateHUDShowUndetected", teammateHUDShowUndetected);
             loadedConfig.addProperty("showCustomHealthBar", showCustomHealthBar);
             loadedConfig.addProperty("showCustomHungerBar", showCustomHungerBar);
             loadedConfig.addProperty("showCustomArmorBar", showCustomArmorBar);
             loadedConfig.addProperty("showCustomAirBar", showCustomAirBar);
             loadedConfig.addProperty("showCustomLevelBar", showCustomLevelBar);
-            loadedConfig.addProperty("teammateHUDShowUndetected", teammateHUDShowUndetected);
             bufferedWriter.write(loadedConfig.toString());
             bufferedWriter.close();
             writer.close();

@@ -5,14 +5,11 @@ import com.iwant2tryhard.hytils.core.Utils;
 import net.minecraft.command.CommandBase;
 import net.minecraft.command.CommandException;
 import net.minecraft.command.ICommandSender;
-import net.minecraft.entity.item.EntityTNTPrimed;
-import net.minecraft.util.BlockPos;
 import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.EnumChatFormatting;
 
 import java.util.Collections;
 import java.util.List;
-import java.util.Map;
 
 public class CheckStateCommand extends CommandBase {
     @Override
@@ -34,6 +31,8 @@ public class CheckStateCommand extends CommandBase {
         Utils.sendMessage(new ChatComponentText(EnumChatFormatting.GOLD + "[Hytils]     " + EnumChatFormatting.GREEN + "previousGame: " + Hytils.instance.getUtils().previousGame));
         Utils.sendMessage(new ChatComponentText(EnumChatFormatting.GOLD + "[Hytils]     " + EnumChatFormatting.GREEN + "prevPreviousGame: " + Hytils.instance.getUtils().prevPreviousGame));
         Utils.sendMessage(new ChatComponentText(EnumChatFormatting.GOLD + "[Hytils]     " + EnumChatFormatting.GREEN + "checkStep: " + Hytils.instance.getUtils().displayTimes));
+        Utils.sendMessage(new ChatComponentText(EnumChatFormatting.GOLD + "[Hytils]     " + EnumChatFormatting.GREEN + "lastPlayerInteractedTimer: " + Hytils.instance.getUtils().lastPlayerInteractedTimer));
+        Utils.sendMessage(new ChatComponentText(EnumChatFormatting.GOLD + "[Hytils]     " + EnumChatFormatting.GREEN + "lastPlayerInteracted: " + Hytils.instance.getUtils().lastPlayerNameInteracted));
     }
 
     @Override

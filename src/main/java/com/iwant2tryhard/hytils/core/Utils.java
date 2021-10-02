@@ -8,6 +8,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemArmor;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.BlockPos;
+import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.util.IChatComponent;
 import net.minecraft.util.MathHelper;
@@ -46,8 +47,6 @@ public class Utils {
     private final Random rnd = new Random();
 
     public String lastPlayerNameInteracted = null;
-    public String lastPlayerNameAttacker = null;
-    public String lastPlayerNameAttacked = null;
     public int lastPlayerInteractedTimer = 0;
 
     public void runLobbyCheckerTimer() {
@@ -62,22 +61,8 @@ public class Utils {
         }, 1000, 1000);
     }
 
-    private void checkForItem(Minecraft mc) {
-        if (mc != null && mc.thePlayer != null && mc.thePlayer.inventory != null) {
-            ItemStack item = mc.thePlayer.inventory.getStackInSlot(0);
-            if (item != null && item.hasDisplayName() && item.getDisplayName().equals(COMPASS_NAME)) {
-                List<String> toolip = item.getTooltip(mc.thePlayer, false);
-                if (toolip.get(1).equals(COMPASS_LORE)) {
-                    inHypixelLobby = true;
-                    currentGame = GameTypes.NOT_IN_GAME;
-                    teammates.clear();
-                    displayTeammates.clear();
-                    prevInitialAbsorption.clear();
-                    return;
-                }
-            }
-        }
-        inHypixelLobby = false;
+    public static void sendFormattedMessage(String message) {
+        sendMessage(new ChatComponentText(EnumChatFormatting.GOLD + "[Hytils] " + EnumChatFormatting.RESET + message));
     }
 
     private void checkIP(Minecraft mc) {
@@ -89,7 +74,7 @@ public class Utils {
         onHypixel = false;
     }
 
-    private void detectTeammatesAuto(){
+    private void detectTeammatesAuto() {
         if (isOnHypixel() && !isInHypixelLobby()) {
             if (teammates.isEmpty()) {
                 detectTeammates();
@@ -97,63 +82,27 @@ public class Utils {
         }
     }
 
-    public void detectTeammates(){
-        Minecraft mc = Hytils.instance.mc;
-        if (mc.theWorld != null && mc.thePlayer != null){
-            List<EntityPlayer> players = mc.theWorld.playerEntities;
-            if (currentGame.gameGroup.equals("bedwars")){
-                teammates.clear();
-                displayTeammates.clear();
-                prevInitialAbsorption.clear();
-                for (EntityPlayer player: players) {
-                    String filteredPlayerName = player.getDisplayNameString();
-                    if (filteredPlayerName.startsWith("\u00a7")){
-                        filteredPlayerName = filteredPlayerName.replace("\u00a7", "");
-                        filteredPlayerName = filteredPlayerName.substring(1);
-                    }
-                    ItemStack chestplate = player.getCurrentArmor(2);
-                    int chestplateColor = 0;
-                    boolean shouldBeTeammate = false;
-                    if (chestplate != null && chestplate.getItem() != null){
-                        if (chestplate.getItem() instanceof ItemArmor){
-                            chestplateColor = ((ItemArmor) chestplate.getItem()).getColor(chestplate);
-                        }
-                    }
-                    if (mc.thePlayer.getCurrentArmor(2) != null && mc.thePlayer.getCurrentArmor(2).getItem() != null) {
-                        if (mc.thePlayer.getCurrentArmor(2).getItem() instanceof ItemArmor){
-                            int myColor = ((ItemArmor) mc.thePlayer.getCurrentArmor(2).getItem()).getColor(mc.thePlayer.getCurrentArmor(2));
-                            shouldBeTeammate = chestplateColor == myColor;
-                        }
-                    }
-                    if (shouldBeTeammate && !teammates.contains(filteredPlayerName)){
-                        teammates.add(filteredPlayerName);
-                    }else{
-                        teammates.remove(filteredPlayerName);
+    private void checkForItem(Minecraft mc) {
+        if (mc != null && mc.thePlayer != null && mc.thePlayer.inventory != null) {
+            if (isOnHypixel()) {
+                ItemStack item = mc.thePlayer.inventory.getStackInSlot(0);
+                if (item != null && item.hasDisplayName() && item.getDisplayName().equals(COMPASS_NAME)) {
+                    List<String> toolip = item.getTooltip(mc.thePlayer, false);
+                    if (toolip.get(1).equals(COMPASS_LORE)) {
+                        inHypixelLobby = true;
+                        currentGame = GameTypes.NOT_IN_GAME;
+                        teammates.clear();
+                        displayTeammates.clear();
+                        prevInitialAbsorption.clear();
+                        return;
                     }
                 }
-            }else if (Hytils.instance.getUtils().currentGame == GameTypes.ARCADE_BLOCKINGDEAD ||
-                    Hytils.instance.getUtils().currentGame == GameTypes.ARCADE_ZOMBIES_DEADEND ||
-                    Hytils.instance.getUtils().currentGame == GameTypes.ARCADE_ZOMBIES_BADBLOOD ||
-                    Hytils.instance.getUtils().currentGame == GameTypes.ARCADE_ZOMBIES_ALIENARCADIUM){
-                teammates.clear();
-                List<EntityPlayer> players1 = mc.theWorld.playerEntities;
-                List<String> players2 = new ArrayList<String>();
-                for (EntityPlayer player: players1) {
-                    if (!player.getDisplayNameString().startsWith("\u00a7c")){
-                        String playerName = player.getDisplayNameString();
-                        if (playerName.startsWith("\u00a7")){
-                            playerName = playerName.replace("\u00a7", "");
-                            playerName = playerName.substring(1);
-                        }
-                        players2.add(playerName);
-                    }
-                }
-                teammates = players2;
             }
         }
+        inHypixelLobby = false;
     }
 
-    public void detectTNT(){
+    public void detectTNT() {
         if (Hytils.instance.mc != null && Hytils.instance.mc.theWorld != null) {
             tntList.clear();
             World wrd = Hytils.instance.mc.theWorld;
@@ -168,28 +117,61 @@ public class Utils {
         }
     }
 
-    public void randomizeDisplayTeammates() {
-        System.out.println("called");
-        if (displayTimes > 9){
-            if (teammates.size() > 0){
-                if (teammates.size() <= Hytils.instance.getConfig().maxTeammateDisplay) { displayTeammates = teammates; }
-                else {
+    public void detectTeammates() {
+        Minecraft mc = Hytils.instance.mc;
+        if (mc.theWorld != null && mc.thePlayer != null) {
+            List<EntityPlayer> players = mc.theWorld.playerEntities;
+            if (currentGame != null) {
+                if (currentGame.gameGroup.equals("bedwars") | currentGame == GameTypes.ARCADE_CAPTURETHEWOOL) {
+                    teammates.clear();
                     displayTeammates.clear();
                     prevInitialAbsorption.clear();
-                    int times = Hytils.instance.getConfig().maxTeammateDisplay;
-                    while (times > 0){
-                        int rand = MathHelper.getRandomIntegerInRange(rnd, 0, teammates.size() - 1);
-                        if (!displayTeammates.contains(teammates.get(rand))){
-                            displayTeammates.add(teammates.get(rand));
-                            --times;
+                    for (EntityPlayer player : players) {
+                        String filteredPlayerName = player.getDisplayNameString();
+                        if (filteredPlayerName.startsWith("\u00a7")) {
+                            filteredPlayerName = filteredPlayerName.replace("\u00a7", "");
+                            filteredPlayerName = filteredPlayerName.substring(1);
+                        }
+                        ItemStack chestplate = player.getCurrentArmor(3);
+                        int chestplateColor = 0;
+                        boolean shouldBeTeammate = false;
+                        if (chestplate != null && chestplate.getItem() != null) {
+                            if (chestplate.getItem() instanceof ItemArmor) {
+                                chestplateColor = ((ItemArmor) chestplate.getItem()).getColor(chestplate);
+                            }
+                        }
+                        if (mc.thePlayer.getCurrentArmor(3) != null && mc.thePlayer.getCurrentArmor(3).getItem() != null) {
+                            if (mc.thePlayer.getCurrentArmor(3).getItem() instanceof ItemArmor) {
+                                int myColor = ((ItemArmor) mc.thePlayer.getCurrentArmor(3).getItem()).getColor(mc.thePlayer.getCurrentArmor(3));
+                                shouldBeTeammate = chestplateColor == myColor;
+                            }
+                        }
+                        if (shouldBeTeammate && !teammates.contains(filteredPlayerName)) {
+                            teammates.add(filteredPlayerName);
+                        } else {
+                            teammates.remove(filteredPlayerName);
                         }
                     }
-                    System.out.println("randomized display teammates list");
+                } else if (Hytils.instance.getUtils().currentGame == GameTypes.ARCADE_BLOCKINGDEAD ||
+                        Hytils.instance.getUtils().currentGame == GameTypes.ARCADE_ZOMBIES_DEADEND ||
+                        Hytils.instance.getUtils().currentGame == GameTypes.ARCADE_ZOMBIES_BADBLOOD ||
+                        Hytils.instance.getUtils().currentGame == GameTypes.ARCADE_ZOMBIES_ALIENARCADIUM) {
+                    teammates.clear();
+                    List<EntityPlayer> players1 = mc.theWorld.playerEntities;
+                    List<String> players2 = new ArrayList<String>();
+                    for (EntityPlayer player : players1) {
+                        if (!player.getDisplayNameString().startsWith("\u00a7c")) {
+                            String playerName = player.getDisplayNameString();
+                            if (playerName.startsWith("\u00a7")) {
+                                playerName = playerName.replace("\u00a7", "");
+                                playerName = playerName.substring(1);
+                            }
+                            players2.add(playerName);
+                        }
+                    }
+                    teammates = players2;
                 }
             }
-            displayTimes = 0;
-        }else{
-            ++displayTimes;
         }
     }
 
@@ -202,10 +184,35 @@ public class Utils {
     }
 
     public static void sendMessage(IChatComponent sendMessage) {
-        ClientChatReceivedEvent event = new ClientChatReceivedEvent((byte)1, sendMessage);
+        ClientChatReceivedEvent event = new ClientChatReceivedEvent((byte) 1, sendMessage);
         MinecraftForge.EVENT_BUS.post(event);
         if (!event.isCanceled()) {
             Minecraft.getMinecraft().thePlayer.addChatMessage(event.message);
+        }
+    }
+
+    public void randomizeDisplayTeammates() {
+        //System.out.println("called");
+        if (displayTimes > 4) {
+            if (teammates.size() > 0) {
+                if (teammates.size() <= Hytils.instance.getConfig().maxTeammateDisplay) {
+                    displayTeammates = teammates;
+                } else {
+                    displayTeammates.clear();
+                    displayTeammates = new ArrayList<String>();
+                    prevInitialAbsorption.clear();
+                    int times = Hytils.instance.getConfig().maxTeammateDisplay;
+                    while (times > 0) {
+                        int rand = MathHelper.getRandomIntegerInRange(rnd, 0, teammates.size() - 1);
+                        displayTeammates.add(teammates.get(rand));
+                        --times;
+                    }
+                    System.out.println("randomized display teammates list");
+                }
+            }
+            displayTimes = 0;
+        }else{
+            ++displayTimes;
         }
     }
 

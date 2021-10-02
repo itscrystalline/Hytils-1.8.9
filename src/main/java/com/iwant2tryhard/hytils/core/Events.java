@@ -1,24 +1,23 @@
 package com.iwant2tryhard.hytils.core;
 
 import com.iwant2tryhard.hytils.Hytils;
+import com.iwant2tryhard.hytils.gui.HytilsConfigScreen;
 import net.minecraft.client.gui.GuiDownloadTerrain;
 import net.minecraft.client.renderer.culling.Frustum;
-import net.minecraft.entity.item.EntityTNTPrimed;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.util.BlockPos;
 import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.EnumChatFormatting;
 import net.minecraftforge.client.event.ClientChatReceivedEvent;
 import net.minecraftforge.client.event.RenderWorldLastEvent;
+import net.minecraftforge.event.entity.living.LivingHurtEvent;
+import net.minecraftforge.event.entity.player.AttackEntityEvent;
 import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
 public class Events {
+
+
     Frustum frustum = new Frustum();
 
     @SubscribeEvent(priority = EventPriority.NORMAL)
@@ -85,66 +84,107 @@ public class Events {
     }
 
     @SubscribeEvent(priority = EventPriority.NORMAL)
-    public void onTickWorld(TickEvent.WorldTickEvent event){
-        Hytils.instance.getUtils().detectTNT();
-        for (EntityTNTPrimed tnt : Hytils.instance.getUtils().tntList) {
-            Map<Integer, BlockPos> tntPos = new HashMap<Integer, BlockPos>();
-            BlockPos nearest = Utils.getNearestBlock(tnt.posX, tnt.posY, tnt.posZ);
-            tntPos.put(0, nearest);
-            List<BlockPos> inExplosionRange = Utils.getSphere(Utils.getNearestBlock(tnt.posX, tnt.posY, tnt.posZ), 15, true);
-            for (BlockPos pos : inExplosionRange) {
-                tntPos.put((int) Math.round(Utils.distanceOf(tnt.posX, tnt.posY, tnt.posZ, pos.getX(), pos.getY(), pos.getZ())), pos);
-            }
-            Hytils.instance.getUtils().highlightList.add(tntPos);
+    public void onTickWorld(TickEvent.WorldTickEvent event) {
+//        Hytils.instance.getUtils().detectTNT();
+//        for (EntityTNTPrimed tnt : Hytils.instance.getUtils().tntList) {
+//            Map<Integer, BlockPos> tntPos = new HashMap<Integer, BlockPos>();
+//            BlockPos nearest = Utils.getNearestBlock(tnt.posX, tnt.posY, tnt.posZ);
+//            tntPos.put(0, nearest);
+//            List<BlockPos> inExplosionRange = Utils.getSphere(Utils.getNearestBlock(tnt.posX, tnt.posY, tnt.posZ), 15, true);
+//            for (BlockPos pos : inExplosionRange) {
+//                tntPos.put((int) Math.round(Utils.distanceOf(tnt.posX, tnt.posY, tnt.posZ, pos.getX(), pos.getY(), pos.getZ())), pos);
+//            }
+//            Hytils.instance.getUtils().highlightList.add(tntPos);
+//
+//            /*for (Map<Integer, BlockPos> map : Hytils.instance.getUtils().highlightList){
+//                BlockPos pos = map.get(0);
+//                if (pos.getX() != nearest.getX() || pos.getY() != nearest.getY() || pos.getZ() != nearest.getZ()){
+//                    Hytils.instance.getUtils().highlightList.remove(map);
+//                }
+//            }*/
+//        }
+    }
 
-            /*for (Map<Integer, BlockPos> map : Hytils.instance.getUtils().highlightList){
-                BlockPos pos = map.get(0);
-                if (pos.getX() != nearest.getX() || pos.getY() != nearest.getY() || pos.getZ() != nearest.getZ()){
-                    Hytils.instance.getUtils().highlightList.remove(map);
+    @SubscribeEvent(priority = EventPriority.NORMAL)
+    public void onTickClient(TickEvent.ClientTickEvent event) {
+        if (Hytils.instance.getUtils().currentGame == null && Hytils.instance.getUtils().isInHypixelLobby()) {
+            Hytils.instance.getUtils().currentGame = GameTypes.NOT_IN_GAME;
+        }
+
+        if (Hytils.instance.getUtils().lastPlayerInteractedTimer <= 0) {
+            Hytils.instance.getUtils().lastPlayerNameInteracted = null;
+        }
+
+        --Hytils.instance.getUtils().lastPlayerInteractedTimer;
+
+        if (Hytils.instance.getShowConfigScreen()) {
+            Hytils.instance.mc.displayGuiScreen(new HytilsConfigScreen());
+            Hytils.instance.setShowConfigScreen(false);
+        }
+
+        if (Hytils.instance.mc.theWorld == null) {
+            Hytils.instance.getDiscordRPC().update("Idle", "In Menu Screen", "logomenuhires", "In Menu Screen", "logoshphrehires", "Hytils " + Hytils.VERSION + " by IWant2TryHard");
+        } else {
+            if (Hytils.instance.mc.isSingleplayer()) {
+                Hytils.instance.getDiscordRPC().update("Singleplayer", "", "logosingleplayerhires", "Singleplayer", "logoshphrehires", "Hytils " + Hytils.VERSION + " by IWant2TryHard");
+            } else {
+                if (Hytils.instance.mc.getCurrentServerData() != null) {
+                    String ip = Hytils.instance.mc.getCurrentServerData().serverIP.toLowerCase();
+                    if (Hytils.instance.getUtils().isOnHypixel()) {
+                        Hytils.instance.getDiscordRPC().update("Multiplayer - " + ip,
+                                "In " + (Hytils.instance.getUtils().currentGame != null ? (Hytils.instance.getUtils().currentGame == GameTypes.NOT_IN_GAME ? "Lobby" : Hytils.instance.getUtils().currentGame.userFriendlyName) : "Unknown")
+                                , "logomultiplayerhypixelhires", "Hypixel - In " + (Hytils.instance.getUtils().currentGame != null ? (Hytils.instance.getUtils().currentGame == GameTypes.NOT_IN_GAME ? "Lobby" : Hytils.instance.getUtils().currentGame.userFriendlyName) : "Unknown"),
+                                "logoshphrehires", "Hytils " + Hytils.VERSION + " by IWant2TryHard");
+                    } else {
+                        Hytils.instance.getDiscordRPC().update("Multiplayer - " + ip, "", "logomultiplayerhires", "Multiplayer - " + ip, "logoshphrehires", "Hytils " + Hytils.VERSION + " by IWant2TryHard");
+                    }
                 }
-            }*/
+            }
         }
     }
 
     @SubscribeEvent(priority = EventPriority.NORMAL)
-    public void onTickClient(TickEvent.ClientTickEvent event){
-        if (Hytils.instance.getUtils().lastPlayerInteractedTimer <= 0){
-            Hytils.instance.getUtils().lastPlayerNameInteracted = null;
+    public void onHit(AttackEntityEvent event) {
+        if (event.target != null) {
+            if (event.target instanceof EntityPlayer) {
+                String name = ((EntityPlayer) event.target).getDisplayNameString();
+                if (name.startsWith("\u00a7")) {
+                    name = name.replace("\u00a7", "");
+                    name = name.substring(1);
+                }
+                Hytils.instance.getUtils().lastPlayerNameInteracted = name;
+                Hytils.instance.getUtils().lastPlayerInteractedTimer = 100;
+            }
         }
+    }
 
-        if (Hytils.instance.mc.thePlayer != null){
-            if (Hytils.instance.mc.thePlayer.getLastAttacker() != null){
-                if (Hytils.instance.mc.thePlayer.getLastAttacker() instanceof EntityPlayer){
-                    String name = ((EntityPlayer)Hytils.instance.mc.thePlayer.getLastAttacker()).getDisplayNameString();
-                    if (name.startsWith("\u00a7")) {
-                        name = name.replace("\u00a7", "");
-                        name = name.substring(1);
+    @SubscribeEvent(priority = EventPriority.NORMAL)
+    public void onHurt(LivingHurtEvent event) {
+        if (event.entity != null) {
+            if (event.entity instanceof EntityPlayer) {
+                if (event.source.getEntity() != null && event.source.getEntity() instanceof EntityPlayer) {
+                    String playerName = ((EntityPlayer) event.entity).getDisplayNameString();
+                    if (playerName.startsWith("\u00a7")) {
+                        playerName = playerName.replace("\u00a7", "");
+                        playerName = playerName.substring(1);
                     }
-                    if (!name.equals(Hytils.instance.getUtils().lastPlayerNameAttacker)) {
-                        Hytils.instance.getUtils().lastPlayerNameAttacker = name;
-                        Hytils.instance.getUtils().lastPlayerNameInteracted = name;
+                    String myName = Hytils.instance.mc.thePlayer.getDisplayNameString();
+                    if (myName.startsWith("\u00a7")) {
+                        myName = myName.replace("\u00a7", "");
+                        myName = myName.substring(1);
+                    }
+                    String attackerName = ((EntityPlayer) event.source.getEntity()).getDisplayNameString();
+                    if (attackerName.startsWith("\u00a7")) {
+                        attackerName = attackerName.replace("\u00a7", "");
+                        attackerName = attackerName.substring(1);
+                    }
+                    if (playerName.equals(myName)) {
+                        Hytils.instance.getUtils().lastPlayerNameInteracted = attackerName;
                         Hytils.instance.getUtils().lastPlayerInteractedTimer = 100;
                     }
                 }
             }
-
-            if (Hytils.instance.mc.thePlayer.func_94060_bK() != null){
-                if (Hytils.instance.mc.thePlayer.func_94060_bK() instanceof EntityPlayer){
-                    String name = ((EntityPlayer)Hytils.instance.mc.thePlayer.func_94060_bK()).getDisplayNameString();
-                    if (name.startsWith("\u00a7")) {
-                        name = name.replace("\u00a7", "");
-                        name = name.substring(1);
-                    }
-                    if (!name.equals(Hytils.instance.getUtils().lastPlayerNameAttacked)) {
-                        Hytils.instance.getUtils().lastPlayerNameAttacked = name;
-                        Hytils.instance.getUtils().lastPlayerNameInteracted = name;
-                        Hytils.instance.getUtils().lastPlayerInteractedTimer = 100;
-                    }
-                }
-            }
         }
-
-        --Hytils.instance.getUtils().lastPlayerInteractedTimer;
     }
 
     @SubscribeEvent(priority = EventPriority.NORMAL)

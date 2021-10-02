@@ -7,10 +7,14 @@ buildscript {
             name = "forge"
             url = "http://files.minecraftforge.net/maven"
         }
+        maven { url 'https://jitpack.io' }
+        flatDir dirs: './libs'
     }
     dependencies {
         classpath 'net.minecraftforge.gradle:ForgeGradle:2.1-SNAPSHOT'
+        classpath 'com.github.Vatuu:discord-rpc:1.6.2'
     }
+
 }
 apply plugin: 'net.minecraftforge.gradle.forge'
 
@@ -20,7 +24,7 @@ plugins {
     id "net.minecraftforge.gradle.forge" version "2.0.2"
 }
 */
-version = "0.1a"
+version = "0.19a"
 group= "com.iwant2tryhard.hytils" // http://maven.apache.org/guides/mini/guide-naming-conventions.html
 archivesBaseName = "Hytils"
 
@@ -38,6 +42,7 @@ minecraft {
 }
 
 dependencies {
+    //compile 'com.github.Vatuu:discord-rpc:1.6.2'
     // you may put jars on which you depend on in ./libs
     // or you may define them like so..
     //compile "some.group:artifact:version:classifier"
