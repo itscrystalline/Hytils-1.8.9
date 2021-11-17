@@ -3,6 +3,7 @@ package com.iwant2tryhard.hytils;
 import com.iwant2tryhard.hytils.commands.CheckStateCommand;
 import com.iwant2tryhard.hytils.commands.CheckTntCommand;
 import com.iwant2tryhard.hytils.commands.ClearTeammatesCommand;
+import com.iwant2tryhard.hytils.commands.GamesMenuCommand;
 import com.iwant2tryhard.hytils.commands.HytilsConfigCommand;
 import com.iwant2tryhard.hytils.commands.PlayerCheckCommand;
 import com.iwant2tryhard.hytils.commands.QueuePreviousCommand;
@@ -32,7 +33,7 @@ import org.lwjgl.opengl.Display;
 public class Hytils
 {
     public static final String MODID = "hytils";
-    public static final String VERSION = "0.19a";
+    public static final String VERSION = "0.22a";
 
     @Mod.Instance(Hytils.MODID)
     public static Hytils instance;
@@ -44,6 +45,7 @@ public class Hytils
     public HytilsDiscordRPCCore discordRPC = new HytilsDiscordRPCCore();
 
     private boolean showConfigScreen = false;
+    private boolean showGamesMenuScreen = false;
 
     @EventHandler
     public void preInit(FMLPreInitializationEvent event) {
@@ -58,6 +60,7 @@ public class Hytils
         MinecraftForge.EVENT_BUS.register(new OnScreenHUD());
         MinecraftForge.EVENT_BUS.register(new InCombatHUD());
         MinecraftForge.EVENT_BUS.register(new Events());
+        ClientCommandHandler.instance.registerCommand(new GamesMenuCommand());
         ClientCommandHandler.instance.registerCommand(new QuickQueueCommand());
         ClientCommandHandler.instance.registerCommand(new ReQueueCommand());
         ClientCommandHandler.instance.registerCommand(new HytilsConfigCommand());
@@ -104,5 +107,13 @@ public class Hytils
 
     public void setShowConfigScreen(boolean showConfigScreen) {
         this.showConfigScreen = showConfigScreen;
+    }
+
+    public boolean getShowGamesMenuScreen() {
+        return showGamesMenuScreen;
+    }
+
+    public void setShowGamesMenuScreen(boolean showGamesMenuScreen) {
+        this.showGamesMenuScreen = showGamesMenuScreen;
     }
 }

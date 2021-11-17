@@ -39,6 +39,7 @@ public class HytilsDiscordRPCCore {
     public void stop() {
         running = false;
         DiscordRPC.discordShutdown();
+        System.out.println("[Hytils] Shutting down Discord RPC...");
     }
 
     public void update(String details, String state, String bigImageKey, String bigImageText, String smallImageKey, String smallImageText) {

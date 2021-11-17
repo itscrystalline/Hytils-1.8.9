@@ -1,20 +1,15 @@
 package com.iwant2tryhard.hytils.commands;
 
-import com.iwant2tryhard.hytils.gui.GamesMenuGui;
-import net.minecraft.client.Minecraft;
+import com.iwant2tryhard.hytils.Hytils;
 import net.minecraft.command.CommandBase;
 import net.minecraft.command.CommandException;
 import net.minecraft.command.ICommandSender;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.entity.player.EntityPlayerMP;
-import net.minecraft.util.ChatComponentText;
-import net.minecraft.util.IChatComponent;
 
 public class GamesMenuCommand extends CommandBase {
 
     @Override
     public String getCommandName() {
-        return "games";
+        return "hygames";
     }
 
     @Override
@@ -24,7 +19,7 @@ public class GamesMenuCommand extends CommandBase {
 
     @Override
     public void processCommand(ICommandSender sender, String[] args) throws CommandException {
-
+        Hytils.instance.setShowGamesMenuScreen(true);
     }
 
     @Override
