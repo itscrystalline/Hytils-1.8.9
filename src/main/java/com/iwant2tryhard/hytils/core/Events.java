@@ -1,7 +1,7 @@
 package com.iwant2tryhard.hytils.core;
 
 import com.iwant2tryhard.hytils.Hytils;
-import com.iwant2tryhard.hytils.gui.GamesMenuGui;
+import com.iwant2tryhard.hytils.gui.GamesMenuGUI;
 import com.iwant2tryhard.hytils.gui.HytilsConfigScreen;
 import net.minecraft.client.gui.GuiDownloadTerrain;
 import net.minecraft.client.renderer.culling.Frustum;
@@ -124,7 +124,7 @@ public class Events {
         }
 
         if (Hytils.instance.getShowGamesMenuScreen()) {
-            Hytils.instance.mc.displayGuiScreen(new GamesMenuGui());
+            Hytils.instance.mc.displayGuiScreen(new GamesMenuGUI());
             Hytils.instance.setShowGamesMenuScreen(false);
         }
 

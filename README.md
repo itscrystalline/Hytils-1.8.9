@@ -21,4 +21,4 @@ Note: This mod is still a heavy WIP. Do keep in mind that bugs are considerably 
 2. Installing the mod
   This mod requires [this JAR file](https://github.com/Vatuu/discord-rpc/releases/tag/1.6.2) to be installed along with the mod as it is a required library, failure to do so will cause the mod to crash on startup.
   
-If this goes smoothly you should see "Hytils [VERSION]" in the game title instead of "Minecraft 1.8.9". Discord Rich Presence is also present with a custom status message on your Discord profile.
+If this goes smoothly apon launching the game you should see "Hytils [VERSION]" in the game title instead of "Minecraft 1.8.9". Discord Rich Presence is also present with a custom status message on your Discord profile.
