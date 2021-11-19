@@ -3,12 +3,7 @@ package com.iwant2tryhard.hytils.core;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
 
 public class MainConfig {
     private final File configFile;
@@ -29,6 +24,25 @@ public class MainConfig {
     public boolean showCustomAirBar = false;
     public boolean showCustomLevelBar = false;
 
+    public boolean equipmentHelperEnabled = false;
+
+    public boolean equipmentHelperWeaponDamageCheck = true;
+    public float equipmentHelperWeaponDamageFavor = 1f;
+    public boolean equipmentHelperWeaponDurabilityCheck = true;
+    public float equipmentHelperWeaponDurabilityFavor = 1f;
+    public boolean equipmentHelperWeaponKnockbackCheck = true;
+    public float equipmentHelperWeaponKnockbackFavor = 1f;
+
+    public boolean equipmentHelperArmorResCheck = true;
+    public float equipmentHelperArmorResFavor = 1f;
+    public boolean equipmentHelperArmorDurabilityCheck = true;
+    public float equipmentHelperArmorDurabilityFavor = 1f;
+
+    public boolean equipmentHelperRodKnockbackCheck = true;
+    public float equipmentHelperRodKnockbackFavor = 1f;
+    public boolean equipmentHelperRodDurabilityCheck = true;
+    public float equipmentHelperRodDurabilityFavor = 1f;
+
     public MainConfig(File configFile) {
         this.configFile = configFile;
     }
@@ -45,7 +59,7 @@ public class MainConfig {
                 }
                 String complete = builder.toString();
                 loadedConfig = new JsonParser().parse(complete).getAsJsonObject();
-                maxTeammateDisplay = (loadedConfig.get("maxTeammateDisplay").getAsInt());
+                maxTeammateDisplay = loadedConfig.get("maxTeammateDisplay").getAsInt();
                 teammateHUDCheckGame = loadedConfig.get("teammateHUDCheckGame").getAsBoolean();
                 teammateHUDEnabled = loadedConfig.get("teammateHUDEnabled").getAsBoolean();
                 teammateHUDHealthBar = loadedConfig.get("teammateHUDHealthBar").getAsBoolean();
@@ -53,11 +67,30 @@ public class MainConfig {
                 teammateHUDArmorBar = loadedConfig.get("teammateHUDArmorBar").getAsBoolean();
                 teammateHUDAirBar = loadedConfig.get("teammateHUDAirBar").getAsBoolean();
                 teammateHUDShowUndetected = loadedConfig.get("teammateHUDShowUndetected").getAsBoolean();
+
                 showCustomHealthBar = loadedConfig.get("showCustomHealthBar").getAsBoolean();
                 showCustomHungerBar = loadedConfig.get("showCustomHungerBar").getAsBoolean();
                 showCustomArmorBar = loadedConfig.get("showCustomArmorBar").getAsBoolean();
                 showCustomAirBar = loadedConfig.get("showCustomAirBar").getAsBoolean();
                 showCustomLevelBar = loadedConfig.get("showCustomLevelBar").getAsBoolean();
+
+                equipmentHelperEnabled = loadedConfig.get("equipmentHelperEnabled").getAsBoolean();
+                equipmentHelperWeaponDamageCheck = loadedConfig.get("equipmentHelperWeaponDamageCheck").getAsBoolean();
+                equipmentHelperWeaponDamageFavor = loadedConfig.get("equipmentHelperWeaponDamageFavor").getAsFloat();
+                equipmentHelperWeaponDurabilityCheck = loadedConfig.get("equipmentHelperWeaponDurabilityCheck").getAsBoolean();
+                equipmentHelperWeaponDurabilityFavor = loadedConfig.get("equipmentHelperWeaponDurabilityFavor").getAsFloat();
+                equipmentHelperWeaponKnockbackCheck = loadedConfig.get("equipmentHelperWeaponKnockbackCheck").getAsBoolean();
+                equipmentHelperWeaponKnockbackFavor = loadedConfig.get("equipmentHelperWeaponKnockbackFavor").getAsFloat();
+
+                equipmentHelperArmorResCheck = loadedConfig.get("equipmentHelperArmorResCheck").getAsBoolean();
+                equipmentHelperArmorResFavor = loadedConfig.get("equipmentHelperArmorResFavor").getAsFloat();
+                equipmentHelperArmorDurabilityCheck = loadedConfig.get("equipmentHelperArmorDurabilityCheck").getAsBoolean();
+                equipmentHelperArmorDurabilityFavor = loadedConfig.get("equipmentHelperArmorDurabilityFavor").getAsFloat();
+
+                equipmentHelperWeaponDurabilityCheck = loadedConfig.get("equipmentHelperWeaponDurabilityCheck").getAsBoolean();
+                equipmentHelperWeaponDurabilityFavor = loadedConfig.get("equipmentHelperWeaponDurabilityFavor").getAsFloat();
+                equipmentHelperWeaponKnockbackCheck = loadedConfig.get("equipmentHelperWeaponKnockbackCheck").getAsBoolean();
+                equipmentHelperWeaponKnockbackFavor = loadedConfig.get("equipmentHelperWeaponKnockbackFavor").getAsFloat();
             } catch (IOException e) {
                 e.printStackTrace();
             }

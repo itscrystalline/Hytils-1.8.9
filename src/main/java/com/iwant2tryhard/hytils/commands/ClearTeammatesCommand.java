@@ -5,7 +5,6 @@ import com.iwant2tryhard.hytils.core.Utils;
 import net.minecraft.command.CommandBase;
 import net.minecraft.command.CommandException;
 import net.minecraft.command.ICommandSender;
-import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.EnumChatFormatting;
 
@@ -28,6 +27,7 @@ public class ClearTeammatesCommand extends CommandBase {
         Hytils.instance.getUtils().teammates.clear();
         Hytils.instance.getUtils().displayTeammates.clear();
         Hytils.instance.getUtils().prevInitialAbsorption.clear();
+        Hytils.instance.getUtils().runLobbyCheckerTimer();
         Utils.sendMessage(new ChatComponentText(EnumChatFormatting.GOLD + "[Hytils] " + EnumChatFormatting.GREEN + "Cleared teammates list."));
     }
 

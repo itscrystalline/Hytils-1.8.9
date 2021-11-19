@@ -1,28 +1,22 @@
 package com.iwant2tryhard.hytils.core;
 
 import com.iwant2tryhard.hytils.Hytils;
+import com.iwant2tryhard.hytils.core.misc.BetterColor;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.item.EntityTNTPrimed;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemArmor;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.BlockPos;
-import net.minecraft.util.ChatComponentText;
-import net.minecraft.util.EnumChatFormatting;
-import net.minecraft.util.IChatComponent;
-import net.minecraft.util.MathHelper;
+import net.minecraft.util.*;
 import net.minecraft.world.World;
 import net.minecraftforge.client.event.ClientChatReceivedEvent;
 import net.minecraftforge.common.MinecraftForge;
 
-import java.util.ArrayList;
-import java.util.HashMap;
+import java.awt.*;
 import java.util.List;
-import java.util.Map;
-import java.util.Random;
 import java.util.Timer;
-import java.util.TimerTask;
+import java.util.*;
 
 public class Utils {
     private static final String COMPASS_NAME = EnumChatFormatting.GREEN + "Game Menu " + EnumChatFormatting.GRAY + "(Right Click)";
@@ -36,6 +30,16 @@ public class Utils {
 
     public List<String> teammates = new ArrayList<String>();
     public List<String> displayTeammates = new ArrayList<String>();
+
+    public Map<Integer, Integer> swordScoreMap = new HashMap<Integer, Integer>();
+    public Map<Integer, Integer> bowScoreMap = new HashMap<Integer, Integer>();
+
+    public Map<Integer, Integer> headScoreMap = new HashMap<Integer, Integer>();
+    public Map<Integer, Integer> chestScoreMap = new HashMap<Integer, Integer>();
+    public Map<Integer, Integer> legsScoreMap = new HashMap<Integer, Integer>();
+    public Map<Integer, Integer> bootsScoreMap = new HashMap<Integer, Integer>();
+
+    public Map<Integer, Integer> rodScoreMap = new HashMap<Integer, Integer>();
 
     public Map<String, Float> prevInitialAbsorption = new HashMap<String, Float>();
 
@@ -211,9 +215,17 @@ public class Utils {
                 }
             }
             displayTimes = 0;
-        }else{
+        } else {
             ++displayTimes;
         }
+    }
+
+    public static BetterColor GetColorValue(int value) {
+        int a = (value >> 24) & 0XFF;
+        int r = (value >> 16) & 0XFF;
+        int g = (value >> 8) & 0XFF;
+        int b = value & 0XFF;
+        return new BetterColor(r, g, b, a);
     }
 
     public static double distanceOf(Entity a, Entity b) {
@@ -332,5 +344,13 @@ public class Utils {
      */
     public static List<BlockPos> getSphere(BlockPos center, double diameter, boolean filled) {
         return getSphere(center, diameter, diameter, diameter, filled);
+    }
+
+    public static int GetColorIntValue(Color value) {
+        return (value.getAlpha() << 24 | value.getRed() << 16 | value.getGreen() << 8 | value.getBlue());
+    }
+
+    public void getScoreMapForSwords(Container inv) {
+
     }
 }

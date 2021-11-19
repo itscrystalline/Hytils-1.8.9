@@ -1,24 +1,11 @@
 package com.iwant2tryhard.hytils;
 
-import com.iwant2tryhard.hytils.commands.CheckStateCommand;
-import com.iwant2tryhard.hytils.commands.CheckTntCommand;
-import com.iwant2tryhard.hytils.commands.ClearTeammatesCommand;
-import com.iwant2tryhard.hytils.commands.GamesMenuCommand;
-import com.iwant2tryhard.hytils.commands.HytilsConfigCommand;
-import com.iwant2tryhard.hytils.commands.PlayerCheckCommand;
-import com.iwant2tryhard.hytils.commands.QueuePreviousCommand;
-import com.iwant2tryhard.hytils.commands.QuickQueueCommand;
-import com.iwant2tryhard.hytils.commands.ReDetectTeammatesCommand;
-import com.iwant2tryhard.hytils.commands.ReQueueCommand;
-import com.iwant2tryhard.hytils.commands.ViewTeammatesCommand;
+import com.iwant2tryhard.hytils.commands.*;
 import com.iwant2tryhard.hytils.core.Events;
 import com.iwant2tryhard.hytils.core.MainConfig;
 import com.iwant2tryhard.hytils.core.Utils;
 import com.iwant2tryhard.hytils.core.discord.HytilsDiscordRPCCore;
-import com.iwant2tryhard.hytils.gui.GunAmmoHUD;
-import com.iwant2tryhard.hytils.gui.InCombatHUD;
-import com.iwant2tryhard.hytils.gui.OnScreenHUD;
-import com.iwant2tryhard.hytils.gui.TeammateHUD;
+import com.iwant2tryhard.hytils.gui.*;
 import net.minecraft.client.Minecraft;
 import net.minecraftforge.client.ClientCommandHandler;
 import net.minecraftforge.common.MinecraftForge;
@@ -33,7 +20,7 @@ import org.lwjgl.opengl.Display;
 public class Hytils
 {
     public static final String MODID = "hytils";
-    public static final String VERSION = "0.22a";
+    public static final String VERSION = "0.23a";
 
     @Mod.Instance(Hytils.MODID)
     public static Hytils instance;
@@ -59,6 +46,7 @@ public class Hytils
         MinecraftForge.EVENT_BUS.register(new GunAmmoHUD());
         MinecraftForge.EVENT_BUS.register(new OnScreenHUD());
         MinecraftForge.EVENT_BUS.register(new InCombatHUD());
+        MinecraftForge.EVENT_BUS.register(new EquipmentHelper());
         MinecraftForge.EVENT_BUS.register(new Events());
         ClientCommandHandler.instance.registerCommand(new GamesMenuCommand());
         ClientCommandHandler.instance.registerCommand(new QuickQueueCommand());
