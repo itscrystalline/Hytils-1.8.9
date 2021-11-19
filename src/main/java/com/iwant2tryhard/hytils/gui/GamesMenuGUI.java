@@ -11,7 +11,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class GamesMenuGui extends GuiScreen {
+public class GamesMenuGUI extends GuiScreen {
     private final ResourceLocation TEXTURE_0 = new ResourceLocation(Hytils.MODID, "textures/games_menu_0.png");
     private final ResourceLocation TEXTURE_1 = new ResourceLocation(Hytils.MODID, "textures/games_menu_1.png");
     private final ResourceLocation TEXTURE_2 = new ResourceLocation(Hytils.MODID, "textures/games_menu_2.png");
