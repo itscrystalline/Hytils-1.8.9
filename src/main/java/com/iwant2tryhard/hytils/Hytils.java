@@ -20,7 +20,7 @@ import org.lwjgl.opengl.Display;
 public class Hytils
 {
     public static final String MODID = "hytils";
-    public static final String VERSION = "0.23a";
+    public static final String VERSION = "0.24a";
 
     @Mod.Instance(Hytils.MODID)
     public static Hytils instance;
