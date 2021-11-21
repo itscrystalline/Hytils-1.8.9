@@ -124,6 +124,7 @@ public class EquipmentHelper {
                     }
                 }
             }
+            //test
             GlStateManager.colorMask(true, true, true, true);
         }
 
