@@ -8,7 +8,7 @@ import net.minecraft.util.EnumChatFormatting;
 import java.io.IOException;
 
 public class HytilsConfigScreen extends GuiScreen {
-    private final byte maxPages = 2;
+    private final byte maxPages = 3;
     private byte page = 1;
 
     @Override
@@ -29,6 +29,9 @@ public class HytilsConfigScreen extends GuiScreen {
         GuiButton buttonOnScreenHUDArmorBar = new GuiButton(10, this.width / 2 - 205, (this.height / 7 * 2) + 35, "Armor Bar: " + (Hytils.instance.getConfig().showCustomArmorBar ? EnumChatFormatting.GREEN + "True" : EnumChatFormatting.RED + "False"));
         GuiButton buttonOnScreenHUDAirBar = new GuiButton(11, this.width / 2 + 5, (this.height / 7 * 2) + 35, "Air Bar: " + (Hytils.instance.getConfig().showCustomAirBar ? EnumChatFormatting.GREEN + "True" : EnumChatFormatting.RED + "False"));
         GuiButton buttonOnScreenHUDLevelBar = new GuiButton(12, this.width / 2 - 205, (this.height / 7 * 2) + 60, "Level Bar: " + (Hytils.instance.getConfig().showCustomLevelBar ? EnumChatFormatting.GREEN + "True" : EnumChatFormatting.RED + "False"));
+
+        //page 3
+        GuiButton buttonEquipmentHelperEnabled = new GuiButton(13, this.width / 2 - 100, (this.height / 10) + 10, "Enabled: " + (Hytils.instance.getConfig().equipmentHelperEnabled ? EnumChatFormatting.GREEN + "True" : EnumChatFormatting.RED + "False"));
 
         GuiButton buttonPrevious = new GuiButton(-1, 10, this.height - 30, 100, 20, "Previous");
         GuiButton buttonNext = new GuiButton(-2, this.width - 110, this.height - 30, 100, 20, "Next");
@@ -55,6 +58,8 @@ public class HytilsConfigScreen extends GuiScreen {
             this.buttonList.add(buttonOnScreenHUDArmorBar);
             this.buttonList.add(buttonOnScreenHUDAirBar);
             this.buttonList.add(buttonOnScreenHUDLevelBar);
+        } else if (page == 3) {
+            this.buttonList.add(buttonEquipmentHelperEnabled);
         }
 
         this.buttonList.add(buttonPrevious);
@@ -64,11 +69,13 @@ public class HytilsConfigScreen extends GuiScreen {
     @Override
     public void drawScreen(int mouseX, int mouseY, float partialTicks) {
         drawDefaultBackground();
-        this.fontRendererObj.drawString(EnumChatFormatting.BOLD + "Hytils Settings", this.width / 2 - (this.fontRendererObj.getStringWidth("Hytils Settings") / 2), this.height / 6, 16777215);
+        this.fontRendererObj.drawString(EnumChatFormatting.BOLD + "Hytils Settings", this.width / 2 - (this.fontRendererObj.getStringWidth("Hytils Settings") / 2), this.height / 10 - 30, 16777215);
         if (page == 1) {
             this.fontRendererObj.drawString("Teammate HUD", this.width / 2 - (this.fontRendererObj.getStringWidth("Teammate HUD") / 2), (this.height / 7 * 2) - 10, 16777215);
         } else if (page == 2) {
             this.fontRendererObj.drawString("On Screen HUD", this.width / 2 - (this.fontRendererObj.getStringWidth("On Screen HUD") / 2), (this.height / 7 * 2) - 10, 16777215);
+        } else if (page == 3) {
+            this.fontRendererObj.drawString("Equipment Helper", this.width / 2 - (this.fontRendererObj.getStringWidth("Equipment Helper") / 2), (this.height / 10) - 10, 16777215);
         }
         this.fontRendererObj.drawString("Hytils version " + Hytils.VERSION, this.width / 2 - (this.fontRendererObj.getStringWidth("Hytils version " + Hytils.VERSION) / 2), this.height - 40, 16777215);
         this.fontRendererObj.drawString("Page " + page + "/" + maxPages, this.width / 2 - (this.fontRendererObj.getStringWidth("Page " + page + "/" + maxPages) / 2), this.height - 20, 16777215);
@@ -80,10 +87,10 @@ public class HytilsConfigScreen extends GuiScreen {
         if (button.enabled) {
             switch (button.id) {
                 case -1:
-                    --page;
+                    page -= 1;
                     break;
                 case -2:
-                    ++page;
+                    page += 1;
                     break;
                 case 0:
                     Hytils.instance.getConfig().teammateHUDEnabled = !Hytils.instance.getConfig().teammateHUDEnabled;
@@ -128,6 +135,9 @@ public class HytilsConfigScreen extends GuiScreen {
                     break;
                 case 12:
                     Hytils.instance.getConfig().showCustomLevelBar = !Hytils.instance.getConfig().showCustomLevelBar;
+                    break;
+                case 13:
+                    Hytils.instance.getConfig().equipmentHelperEnabled = !Hytils.instance.getConfig().equipmentHelperEnabled;
                     break;
             }
             initGui();
