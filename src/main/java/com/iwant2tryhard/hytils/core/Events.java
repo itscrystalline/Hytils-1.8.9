@@ -148,14 +148,16 @@ public class Events {
             }
         }
 
-        new Thread("InvCheck") {
-            @Override
-            public void run() {
-                if (Hytils.instance.mc != null && Hytils.instance.mc.thePlayer != null) {
-                    Hytils.instance.getUtils().scoreInventory(Hytils.instance.mc.thePlayer.inventoryContainer);
-                }
-            }
-        }.start();
+        if (Hytils.instance.mc != null && Hytils.instance.mc.thePlayer != null) {
+            Hytils.instance.getUtils().scoreInventory(Hytils.instance.mc.thePlayer.inventoryContainer);
+        }
+
+//        new Thread("InvCheck") {
+//            @Override
+//            public void run() {
+//
+//            }
+//        }.start();
     }
 
     @SubscribeEvent(priority = EventPriority.NORMAL)

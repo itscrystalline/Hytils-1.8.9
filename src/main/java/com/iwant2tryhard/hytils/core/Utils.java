@@ -14,15 +14,23 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemArmor;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagList;
-import net.minecraft.util.*;
+import net.minecraft.util.BlockPos;
+import net.minecraft.util.ChatComponentText;
+import net.minecraft.util.EnumChatFormatting;
+import net.minecraft.util.IChatComponent;
+import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
 import net.minecraftforge.client.event.ClientChatReceivedEvent;
 import net.minecraftforge.common.MinecraftForge;
 
 import java.awt.*;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Random;
 import java.util.Timer;
-import java.util.*;
+import java.util.TimerTask;
 
 public class Utils {
     private static final String COMPASS_NAME = EnumChatFormatting.GREEN + "Game Menu " + EnumChatFormatting.GRAY + "(Right Click)";
@@ -311,14 +319,6 @@ public class Utils {
         return getSphere(center, diameter, diameter, diameter, filled);
     }
 
-    public static BetterColor GetColorValue(int value) {
-        int a = (value >> 24) & 0XFF;
-        int r = (value >> 16) & 0XFF;
-        int g = (value >> 8) & 0XFF;
-        int b = value & 0XFF;
-        return new BetterColor(r, g, b, a);
-    }
-
     public static int getEnchantmentLevel(ItemStack stack, Enchantment enchant) {
         NBTTagList nbttaglist = stack.getEnchantmentTagList();
 
@@ -358,171 +358,6 @@ public class Utils {
         double y1 = a.posY;
         double z1 = a.posZ;
         return distanceOf(x1, y1, z1, x2, y2, z2);
-    }
-
-    public static double distanceOf(double x1, double y1, double z1, double x2, double y2, double z2) {
-        return Math.sqrt(Math.pow((x1 - x2), 2d) + Math.pow((y1 - y2), 2d) + Math.pow((z1 - z2), 2d));
-    }
-
-    public static BlockPos getNearestBlock(double x, double y, double z) {
-        double nearestX = Math.round(x);
-        double nearestY = Math.round(y);
-        double nearestZ = Math.round(z);
-        return new BlockPos(nearestX, nearestY, nearestZ);
-    }
-
-    private static double lengthSq(double x, double y, double z) {
-        return (x * x) + (y * y) + (z * z);
-    }
-
-    private static double lengthSq(double x, double z) {
-        return (x * x) + (z * z);
-    }
-
-    public void getScoreMapForSwords(Container inv) {
-        swordScoreMap.clear();
-        float maxDamageScore = ((4 * Hytils.instance.getConfig().equipmentHelperWeaponDamageTierFavor) +
-                (10 * Hytils.instance.getConfig().equipmentHelperWeaponDamageLevelFavor)) *
-                Hytils.instance.getConfig().equipmentHelperWeaponDamageFavor;
-        float maxDurabilityScore = ((6 * Hytils.instance.getConfig().equipmentHelperWeaponDurabilityTierFavor) +
-                (6 * Hytils.instance.getConfig().equipmentHelperWeaponDurabilityLevelFavor)) *
-                Hytils.instance.getConfig().equipmentHelperWeaponDurabilityFavor * 0.75f;
-        float maxKnockbackScore = (2 * Hytils.instance.getConfig().equipmentHelperWeaponKnockbackFavor) * 0.75f;
-        List<Slot> slots = inv.inventorySlots;
-        for (int i = 0; i < slots.size(); i++) {
-            if (slots.get(i).getStack() != null && slots.get(i).getStack().getItem() != null) {
-                Item item = slots.get(i).getStack().getItem();
-                ItemStack itemstack = slots.get(i).getStack();
-                float damageScore = 0;
-                float durabilityScore = 0;
-                float knockbackScore = 0;
-                int sharpnessLevel = getEnchantmentLevel(itemstack, Enchantment.sharpness);
-                int unbreakingLevel = getEnchantmentLevel(itemstack, Enchantment.unbreaking);
-                int knockbacklevel = getEnchantmentLevel(itemstack, Enchantment.knockback);
-                if (item == Items.wooden_sword) {
-                    float scoreDamageRaw = ((1 * Hytils.instance.getConfig().equipmentHelperWeaponDamageTierFavor) +
-                            (sharpnessLevel * 2 * Hytils.instance.getConfig().equipmentHelperWeaponDamageLevelFavor)) *
-                            Hytils.instance.getConfig().equipmentHelperWeaponDamageFavor;
-                    float scoreDurabilityRaw = ((2 * Hytils.instance.getConfig().equipmentHelperWeaponDurabilityTierFavor) +
-                            (unbreakingLevel * 2 * Hytils.instance.getConfig().equipmentHelperWeaponDurabilityLevelFavor)) *
-                            Hytils.instance.getConfig().equipmentHelperWeaponDurabilityFavor * 0.5f;
-                    float scoreKnockbackRaw = (knockbacklevel * Hytils.instance.getConfig().equipmentHelperWeaponKnockbackFavor) * 0.5f;
-                    damageScore = (scoreDamageRaw / maxDamageScore) * 100f;
-                    durabilityScore = (scoreDurabilityRaw / maxDurabilityScore) * 50f;
-                    knockbackScore = (scoreKnockbackRaw / maxKnockbackScore) * 50f;
-                } else if (item == Items.golden_sword) {
-                    float scoreDamageRaw = ((1 * Hytils.instance.getConfig().equipmentHelperWeaponDamageTierFavor) +
-                            (sharpnessLevel * 2 * Hytils.instance.getConfig().equipmentHelperWeaponDamageLevelFavor)) *
-                            Hytils.instance.getConfig().equipmentHelperWeaponDamageFavor;
-                    float scoreDurabilityRaw = ((1 * Hytils.instance.getConfig().equipmentHelperWeaponDurabilityTierFavor) +
-                            (unbreakingLevel * 2 * Hytils.instance.getConfig().equipmentHelperWeaponDurabilityLevelFavor)) *
-                            Hytils.instance.getConfig().equipmentHelperWeaponDurabilityFavor * 0.5f;
-                    float scoreKnockbackRaw = (knockbacklevel * Hytils.instance.getConfig().equipmentHelperWeaponKnockbackFavor) * 0.5f;
-                    damageScore = (scoreDamageRaw / maxDamageScore) * 100f;
-                    durabilityScore = (scoreDurabilityRaw / maxDurabilityScore) * 50f;
-                    knockbackScore = (scoreKnockbackRaw / maxKnockbackScore) * 50f;
-                } else if (item == Items.stone_sword) {
-                    float scoreDamageRaw = ((2 * Hytils.instance.getConfig().equipmentHelperWeaponDamageTierFavor) +
-                            (sharpnessLevel * 2 * Hytils.instance.getConfig().equipmentHelperWeaponDamageLevelFavor)) *
-                            Hytils.instance.getConfig().equipmentHelperWeaponDamageFavor;
-                    float scoreDurabilityRaw = ((3 * Hytils.instance.getConfig().equipmentHelperWeaponDurabilityTierFavor) +
-                            (unbreakingLevel * 2 * Hytils.instance.getConfig().equipmentHelperWeaponDurabilityLevelFavor)) *
-                            Hytils.instance.getConfig().equipmentHelperWeaponDurabilityFavor * 0.5f;
-                    float scoreKnockbackRaw = (knockbacklevel * Hytils.instance.getConfig().equipmentHelperWeaponKnockbackFavor) * 0.5f;
-                    damageScore = (scoreDamageRaw / maxDamageScore) * 100f;
-                    durabilityScore = (scoreDurabilityRaw / maxDurabilityScore) * 50f;
-                    knockbackScore = (scoreKnockbackRaw / maxKnockbackScore) * 50f;
-                } else if (item == Items.iron_sword) {
-                    float scoreDamageRaw = ((3 * Hytils.instance.getConfig().equipmentHelperWeaponDamageTierFavor) +
-                            (sharpnessLevel * 2 * Hytils.instance.getConfig().equipmentHelperWeaponDamageLevelFavor)) *
-                            Hytils.instance.getConfig().equipmentHelperWeaponDamageFavor;
-                    float scoreDurabilityRaw = ((4 * Hytils.instance.getConfig().equipmentHelperWeaponDurabilityTierFavor) +
-                            (unbreakingLevel * 2 * Hytils.instance.getConfig().equipmentHelperWeaponDurabilityLevelFavor)) *
-                            Hytils.instance.getConfig().equipmentHelperWeaponDurabilityFavor * 0.5f;
-                    float scoreKnockbackRaw = (knockbacklevel * Hytils.instance.getConfig().equipmentHelperWeaponKnockbackFavor) * 0.5f;
-                    damageScore = (scoreDamageRaw / maxDamageScore) * 100f;
-                    durabilityScore = (scoreDurabilityRaw / maxDurabilityScore) * 50f;
-                    knockbackScore = (scoreKnockbackRaw / maxKnockbackScore) * 50f;
-                } else if (item == Items.diamond_sword) {
-                    float scoreDamageRaw = ((4 * Hytils.instance.getConfig().equipmentHelperWeaponDamageTierFavor) +
-                            (sharpnessLevel * 2 * Hytils.instance.getConfig().equipmentHelperWeaponDamageLevelFavor)) *
-                            Hytils.instance.getConfig().equipmentHelperWeaponDamageFavor;
-                    float scoreDurabilityRaw = ((6 * Hytils.instance.getConfig().equipmentHelperWeaponDurabilityTierFavor) +
-                            (unbreakingLevel * 2 * Hytils.instance.getConfig().equipmentHelperWeaponDurabilityLevelFavor)) *
-                            Hytils.instance.getConfig().equipmentHelperWeaponDurabilityFavor * 0.5f;
-                    float scoreKnockbackRaw = (knockbacklevel * Hytils.instance.getConfig().equipmentHelperWeaponKnockbackFavor) * 0.5f;
-                    damageScore = (scoreDamageRaw / maxDamageScore) * 100f;
-                    durabilityScore = (scoreDurabilityRaw / maxDurabilityScore) * 50f;
-                    knockbackScore = (scoreKnockbackRaw / maxKnockbackScore) * 50f;
-                }
-                float sumScore = 0;
-                float divisor = 0;
-                if (Hytils.instance.getConfig().equipmentHelperWeaponDamageCheck) {
-                    sumScore += damageScore;
-                    divisor += 1f;
-                }
-                if (Hytils.instance.getConfig().equipmentHelperWeaponDurabilityCheck) {
-                    sumScore += durabilityScore;
-                    divisor += 0.5f;
-                }
-                if (Hytils.instance.getConfig().equipmentHelperWeaponKnockbackCheck) {
-                    sumScore += knockbackScore;
-                    divisor += 0.5f;
-                }
-                swordScoreMap.put(i, sumScore / divisor);
-            }
-        }
-    }
-
-    public void getScoreMapForBows(Container inv) {
-        bowScoreMap.clear();
-        float maxDamageScore = (10 * Hytils.instance.getConfig().equipmentHelperWeaponDamageLevelFavor) *
-                Hytils.instance.getConfig().equipmentHelperWeaponDamageFavor;
-        float maxDurabilityScore = (6 * Hytils.instance.getConfig().equipmentHelperWeaponDurabilityLevelFavor) *
-                Hytils.instance.getConfig().equipmentHelperWeaponDurabilityFavor * 0.75f;
-        float maxKnockbackScore = (2 * Hytils.instance.getConfig().equipmentHelperWeaponKnockbackFavor) * 0.75f;
-        List<Slot> slots = inv.inventorySlots;
-        for (int i = 0; i < slots.size(); i++) {
-            if (slots.get(i).getStack() != null && slots.get(i).getStack().getItem() != null) {
-                Item item = slots.get(i).getStack().getItem();
-                ItemStack itemstack = slots.get(i).getStack();
-                float damageScore = 0;
-                float durabilityScore = 0;
-                float knockbackScore = 0;
-                int sharpnessLevel = getEnchantmentLevel(itemstack, Enchantment.power);
-                int unbreakingLevel = getEnchantmentLevel(itemstack, Enchantment.unbreaking);
-                int knockbacklevel = getEnchantmentLevel(itemstack, Enchantment.punch);
-                if (item == Items.bow) {
-                    float scoreDamageRaw = (sharpnessLevel * 2 * Hytils.instance.getConfig().equipmentHelperWeaponDamageLevelFavor) *
-                            Hytils.instance.getConfig().equipmentHelperWeaponDamageFavor;
-                    float scoreDurabilityRaw = (unbreakingLevel * 2 * Hytils.instance.getConfig().equipmentHelperWeaponDurabilityLevelFavor) *
-                            Hytils.instance.getConfig().equipmentHelperWeaponDurabilityFavor * 0.5f;
-                    float scoreKnockbackRaw = (knockbacklevel * Hytils.instance.getConfig().equipmentHelperWeaponKnockbackFavor) * 0.5f;
-                    damageScore = (scoreDamageRaw / maxDamageScore) * 100f;
-                    durabilityScore = (scoreDurabilityRaw / maxDurabilityScore) * 50f;
-                    knockbackScore = (scoreKnockbackRaw / maxKnockbackScore) * 50f;
-                }
-                float sumScore = 0;
-                float divisor = 0;
-                if (Hytils.instance.getConfig().equipmentHelperWeaponDamageCheck) {
-                    sumScore += damageScore;
-                    divisor += 1f;
-                }
-                if (Hytils.instance.getConfig().equipmentHelperWeaponDurabilityCheck) {
-                    sumScore += durabilityScore;
-                    divisor += 0.5f;
-                }
-                if (Hytils.instance.getConfig().equipmentHelperWeaponKnockbackCheck) {
-                    sumScore += knockbackScore;
-                    divisor += 0.5f;
-                }
-                bowScoreMap.put(i, sumScore / divisor);
-            }
-        }
-    }
-
-    public static int GetColorIntValue(Color value) {
-        return (value.getAlpha() << 24 | value.getRed() << 16 | value.getGreen() << 8 | value.getBlue());
     }
 
     public void getScoreMapForArmor(Container inv) {
@@ -655,6 +490,185 @@ public class Utils {
         }
     }
 
+    public static double distanceOf(double x1, double y1, double z1, double x2, double y2, double z2) {
+        return Math.sqrt(Math.pow((x1 - x2), 2d) + Math.pow((y1 - y2), 2d) + Math.pow((z1 - z2), 2d));
+    }
+
+    public static BlockPos getNearestBlock(double x, double y, double z) {
+        double nearestX = Math.round(x);
+        double nearestY = Math.round(y);
+        double nearestZ = Math.round(z);
+        return new BlockPos(nearestX, nearestY, nearestZ);
+    }
+
+    private static double lengthSq(double x, double y, double z) {
+        return (x * x) + (y * y) + (z * z);
+    }
+
+    private static double lengthSq(double x, double z) {
+        return (x * x) + (z * z);
+    }
+
+    public static int GetColorIntValue(Color value) {
+        return (value.getAlpha() << 24 | value.getRed() << 16 | value.getGreen() << 8 | value.getBlue());
+    }
+
+    public static BetterColor GetColorValue(int value) {
+        int a = (value >> 24) & 0XFF;
+        int r = (value >> 16) & 0XFF;
+        int g = (value >> 8) & 0XFF;
+        int b = value & 0XFF;
+        return new BetterColor(r, g, b, a);
+    }
+
+    public void getScoreMapForSwords(Container inv) {
+        swordScoreMap.clear();
+        float maxDamageScore = ((4 * Hytils.instance.getConfig().equipmentHelperWeaponDamageTierFavor) +
+                (10 * Hytils.instance.getConfig().equipmentHelperWeaponDamageLevelFavor)) *
+                Hytils.instance.getConfig().equipmentHelperWeaponDamageFavor;
+        float maxDurabilityScore = ((6 * Hytils.instance.getConfig().equipmentHelperWeaponDurabilityTierFavor) +
+                (6 * Hytils.instance.getConfig().equipmentHelperWeaponDurabilityLevelFavor)) *
+                Hytils.instance.getConfig().equipmentHelperWeaponDurabilityFavor * 0.75f;
+        float maxKnockbackScore = (2 * Hytils.instance.getConfig().equipmentHelperWeaponKnockbackFavor) * 0.75f;
+        List<Slot> slots = inv.inventorySlots;
+        for (int i = 0; i < slots.size(); i++) {
+            if (slots.get(i).getStack() != null && slots.get(i).getStack().getItem() != null) {
+                Item item = slots.get(i).getStack().getItem();
+                ItemStack itemstack = slots.get(i).getStack();
+                float damageScore = 0;
+                float durabilityScore = 0;
+                float knockbackScore = 0;
+                int sharpnessLevel = getEnchantmentLevel(itemstack, Enchantment.sharpness);
+                int unbreakingLevel = getEnchantmentLevel(itemstack, Enchantment.unbreaking);
+                int knockbacklevel = getEnchantmentLevel(itemstack, Enchantment.knockback);
+                if (item == Items.wooden_sword |
+                        item == Items.stone_sword |
+                        item == Items.golden_sword |
+                        item == Items.iron_sword |
+                        item == Items.diamond_sword) {
+                    if (item == Items.wooden_sword) {
+                        float scoreDamageRaw = ((1 * Hytils.instance.getConfig().equipmentHelperWeaponDamageTierFavor) +
+                                (sharpnessLevel * 2 * Hytils.instance.getConfig().equipmentHelperWeaponDamageLevelFavor)) *
+                                Hytils.instance.getConfig().equipmentHelperWeaponDamageFavor;
+                        float scoreDurabilityRaw = ((2 * Hytils.instance.getConfig().equipmentHelperWeaponDurabilityTierFavor) +
+                                (unbreakingLevel * 2 * Hytils.instance.getConfig().equipmentHelperWeaponDurabilityLevelFavor)) *
+                                Hytils.instance.getConfig().equipmentHelperWeaponDurabilityFavor * 0.5f;
+                        float scoreKnockbackRaw = (knockbacklevel * Hytils.instance.getConfig().equipmentHelperWeaponKnockbackFavor) * 0.5f;
+                        damageScore = (scoreDamageRaw / maxDamageScore) * 100f;
+                        durabilityScore = (scoreDurabilityRaw / maxDurabilityScore) * 50f;
+                        knockbackScore = (scoreKnockbackRaw / maxKnockbackScore) * 50f;
+                    } else if (item == Items.golden_sword) {
+                        float scoreDamageRaw = ((1 * Hytils.instance.getConfig().equipmentHelperWeaponDamageTierFavor) +
+                                (sharpnessLevel * 2 * Hytils.instance.getConfig().equipmentHelperWeaponDamageLevelFavor)) *
+                                Hytils.instance.getConfig().equipmentHelperWeaponDamageFavor;
+                        float scoreDurabilityRaw = ((1 * Hytils.instance.getConfig().equipmentHelperWeaponDurabilityTierFavor) +
+                                (unbreakingLevel * 2 * Hytils.instance.getConfig().equipmentHelperWeaponDurabilityLevelFavor)) *
+                                Hytils.instance.getConfig().equipmentHelperWeaponDurabilityFavor * 0.5f;
+                        float scoreKnockbackRaw = (knockbacklevel * Hytils.instance.getConfig().equipmentHelperWeaponKnockbackFavor) * 0.5f;
+                        damageScore = (scoreDamageRaw / maxDamageScore) * 100f;
+                        durabilityScore = (scoreDurabilityRaw / maxDurabilityScore) * 50f;
+                        knockbackScore = (scoreKnockbackRaw / maxKnockbackScore) * 50f;
+                    } else if (item == Items.stone_sword) {
+                        float scoreDamageRaw = ((2 * Hytils.instance.getConfig().equipmentHelperWeaponDamageTierFavor) +
+                                (sharpnessLevel * 2 * Hytils.instance.getConfig().equipmentHelperWeaponDamageLevelFavor)) *
+                                Hytils.instance.getConfig().equipmentHelperWeaponDamageFavor;
+                        float scoreDurabilityRaw = ((3 * Hytils.instance.getConfig().equipmentHelperWeaponDurabilityTierFavor) +
+                                (unbreakingLevel * 2 * Hytils.instance.getConfig().equipmentHelperWeaponDurabilityLevelFavor)) *
+                                Hytils.instance.getConfig().equipmentHelperWeaponDurabilityFavor * 0.5f;
+                        float scoreKnockbackRaw = (knockbacklevel * Hytils.instance.getConfig().equipmentHelperWeaponKnockbackFavor) * 0.5f;
+                        damageScore = (scoreDamageRaw / maxDamageScore) * 100f;
+                        durabilityScore = (scoreDurabilityRaw / maxDurabilityScore) * 50f;
+                        knockbackScore = (scoreKnockbackRaw / maxKnockbackScore) * 50f;
+                    } else if (item == Items.iron_sword) {
+                        float scoreDamageRaw = ((3 * Hytils.instance.getConfig().equipmentHelperWeaponDamageTierFavor) +
+                                (sharpnessLevel * 2 * Hytils.instance.getConfig().equipmentHelperWeaponDamageLevelFavor)) *
+                                Hytils.instance.getConfig().equipmentHelperWeaponDamageFavor;
+                        float scoreDurabilityRaw = ((4 * Hytils.instance.getConfig().equipmentHelperWeaponDurabilityTierFavor) +
+                                (unbreakingLevel * 2 * Hytils.instance.getConfig().equipmentHelperWeaponDurabilityLevelFavor)) *
+                                Hytils.instance.getConfig().equipmentHelperWeaponDurabilityFavor * 0.5f;
+                        float scoreKnockbackRaw = (knockbacklevel * Hytils.instance.getConfig().equipmentHelperWeaponKnockbackFavor) * 0.5f;
+                        damageScore = (scoreDamageRaw / maxDamageScore) * 100f;
+                        durabilityScore = (scoreDurabilityRaw / maxDurabilityScore) * 50f;
+                        knockbackScore = (scoreKnockbackRaw / maxKnockbackScore) * 50f;
+                    } else if (item == Items.diamond_sword) {
+                        float scoreDamageRaw = ((4 * Hytils.instance.getConfig().equipmentHelperWeaponDamageTierFavor) +
+                                (sharpnessLevel * 2 * Hytils.instance.getConfig().equipmentHelperWeaponDamageLevelFavor)) *
+                                Hytils.instance.getConfig().equipmentHelperWeaponDamageFavor;
+                        float scoreDurabilityRaw = ((6 * Hytils.instance.getConfig().equipmentHelperWeaponDurabilityTierFavor) +
+                                (unbreakingLevel * 2 * Hytils.instance.getConfig().equipmentHelperWeaponDurabilityLevelFavor)) *
+                                Hytils.instance.getConfig().equipmentHelperWeaponDurabilityFavor * 0.5f;
+                        float scoreKnockbackRaw = (knockbacklevel * Hytils.instance.getConfig().equipmentHelperWeaponKnockbackFavor) * 0.5f;
+                        damageScore = (scoreDamageRaw / maxDamageScore) * 100f;
+                        durabilityScore = (scoreDurabilityRaw / maxDurabilityScore) * 50f;
+                        knockbackScore = (scoreKnockbackRaw / maxKnockbackScore) * 50f;
+                    }
+                    float sumScore = 0;
+                    float divisor = 0;
+                    if (Hytils.instance.getConfig().equipmentHelperWeaponDamageCheck) {
+                        sumScore += damageScore;
+                        divisor += 1f;
+                    }
+                    if (Hytils.instance.getConfig().equipmentHelperWeaponDurabilityCheck) {
+                        sumScore += durabilityScore;
+                        divisor += 0.5f;
+                    }
+                    if (Hytils.instance.getConfig().equipmentHelperWeaponKnockbackCheck) {
+                        sumScore += knockbackScore;
+                        divisor += 0.5f;
+                    }
+                    swordScoreMap.put(i, sumScore / divisor);
+                }
+            }
+        }
+    }
+
+    public void getScoreMapForBows(Container inv) {
+        bowScoreMap.clear();
+        float maxDamageScore = (10 * Hytils.instance.getConfig().equipmentHelperWeaponDamageLevelFavor) *
+                Hytils.instance.getConfig().equipmentHelperWeaponDamageFavor;
+        float maxDurabilityScore = (6 * Hytils.instance.getConfig().equipmentHelperWeaponDurabilityLevelFavor) *
+                Hytils.instance.getConfig().equipmentHelperWeaponDurabilityFavor * 0.75f;
+        float maxKnockbackScore = (2 * Hytils.instance.getConfig().equipmentHelperWeaponKnockbackFavor) * 0.75f;
+        List<Slot> slots = inv.inventorySlots;
+        for (int i = 0; i < slots.size(); i++) {
+            if (slots.get(i).getStack() != null && slots.get(i).getStack().getItem() != null) {
+                Item item = slots.get(i).getStack().getItem();
+                ItemStack itemstack = slots.get(i).getStack();
+                float damageScore = 0;
+                float durabilityScore = 0;
+                float knockbackScore = 0;
+                int sharpnessLevel = getEnchantmentLevel(itemstack, Enchantment.power);
+                int unbreakingLevel = getEnchantmentLevel(itemstack, Enchantment.unbreaking);
+                int knockbacklevel = getEnchantmentLevel(itemstack, Enchantment.punch);
+                if (item == Items.bow) {
+                    float scoreDamageRaw = (sharpnessLevel * 2 * Hytils.instance.getConfig().equipmentHelperWeaponDamageLevelFavor) *
+                            Hytils.instance.getConfig().equipmentHelperWeaponDamageFavor;
+                    float scoreDurabilityRaw = (unbreakingLevel * 2 * Hytils.instance.getConfig().equipmentHelperWeaponDurabilityLevelFavor) *
+                            Hytils.instance.getConfig().equipmentHelperWeaponDurabilityFavor * 0.5f;
+                    float scoreKnockbackRaw = (knockbacklevel * Hytils.instance.getConfig().equipmentHelperWeaponKnockbackFavor) * 0.5f;
+                    damageScore = (scoreDamageRaw / maxDamageScore) * 100f;
+                    durabilityScore = (scoreDurabilityRaw / maxDurabilityScore) * 50f;
+                    knockbackScore = (scoreKnockbackRaw / maxKnockbackScore) * 50f;
+                    float sumScore = 0;
+                    float divisor = 0;
+                    if (Hytils.instance.getConfig().equipmentHelperWeaponDamageCheck) {
+                        sumScore += damageScore;
+                        divisor += 1f;
+                    }
+                    if (Hytils.instance.getConfig().equipmentHelperWeaponDurabilityCheck) {
+                        sumScore += durabilityScore;
+                        divisor += 0.5f;
+                    }
+                    if (Hytils.instance.getConfig().equipmentHelperWeaponKnockbackCheck) {
+                        sumScore += knockbackScore;
+                        divisor += 0.5f;
+                    }
+                    bowScoreMap.put(i, sumScore / divisor);
+                }
+            }
+        }
+    }
+
     public void getScoreMapForRods(Container inv) {
         rodScoreMap.clear();
         float maxDurabilityScore = (6 * Hytils.instance.getConfig().equipmentHelperRodDurabilityLevelFavor) *
@@ -675,18 +689,18 @@ public class Utils {
                     float scoreKnockbackRaw = (knockbacklevel * 2 * Hytils.instance.getConfig().equipmentHelperRodKnockbackFavor);
                     durabilityScore = (scoreDurabilityRaw / maxDurabilityScore) * 50f;
                     knockbackScore = (scoreKnockbackRaw / maxKnockbackScore) * 100f;
+                    float sumScore = 0;
+                    float divisor = 0;
+                    if (Hytils.instance.getConfig().equipmentHelperRodDurabilityCheck) {
+                        sumScore += durabilityScore;
+                        divisor += 0.5f;
+                    }
+                    if (Hytils.instance.getConfig().equipmentHelperRodKnockbackCheck) {
+                        sumScore += knockbackScore;
+                        divisor += 1f;
+                    }
+                    rodScoreMap.put(i, sumScore / divisor);
                 }
-                float sumScore = 0;
-                float divisor = 0;
-                if (Hytils.instance.getConfig().equipmentHelperRodDurabilityCheck) {
-                    sumScore += durabilityScore;
-                    divisor += 0.5f;
-                }
-                if (Hytils.instance.getConfig().equipmentHelperRodKnockbackCheck) {
-                    sumScore += knockbackScore;
-                    divisor += 1f;
-                }
-                rodScoreMap.put(i, sumScore / divisor);
             }
         }
     }

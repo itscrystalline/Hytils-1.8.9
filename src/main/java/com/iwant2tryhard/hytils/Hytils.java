@@ -1,11 +1,22 @@
 package com.iwant2tryhard.hytils;
 
-import com.iwant2tryhard.hytils.commands.*;
+import com.iwant2tryhard.hytils.commands.ClearTeammatesCommand;
+import com.iwant2tryhard.hytils.commands.GamesMenuCommand;
+import com.iwant2tryhard.hytils.commands.HytilsConfigCommand;
+import com.iwant2tryhard.hytils.commands.HytilsDebugCommand;
+import com.iwant2tryhard.hytils.commands.QueuePreviousCommand;
+import com.iwant2tryhard.hytils.commands.QuickQueueCommand;
+import com.iwant2tryhard.hytils.commands.ReDetectTeammatesCommand;
+import com.iwant2tryhard.hytils.commands.ReQueueCommand;
 import com.iwant2tryhard.hytils.core.Events;
 import com.iwant2tryhard.hytils.core.MainConfig;
 import com.iwant2tryhard.hytils.core.Utils;
 import com.iwant2tryhard.hytils.core.discord.HytilsDiscordRPCCore;
-import com.iwant2tryhard.hytils.gui.*;
+import com.iwant2tryhard.hytils.gui.EquipmentHelper;
+import com.iwant2tryhard.hytils.gui.GunAmmoHUD;
+import com.iwant2tryhard.hytils.gui.InCombatHUD;
+import com.iwant2tryhard.hytils.gui.OnScreenHUD;
+import com.iwant2tryhard.hytils.gui.TeammateHUD;
 import net.minecraft.client.Minecraft;
 import net.minecraftforge.client.ClientCommandHandler;
 import net.minecraftforge.common.MinecraftForge;
@@ -20,7 +31,7 @@ import org.lwjgl.opengl.Display;
 public class Hytils
 {
     public static final String MODID = "hytils";
-    public static final String VERSION = "0.24a";
+    public static final String VERSION = "0.26a";
 
     @Mod.Instance(Hytils.MODID)
     public static Hytils instance;
@@ -53,12 +64,9 @@ public class Hytils
         ClientCommandHandler.instance.registerCommand(new ReQueueCommand());
         ClientCommandHandler.instance.registerCommand(new HytilsConfigCommand());
         ClientCommandHandler.instance.registerCommand(new QueuePreviousCommand());
-        ClientCommandHandler.instance.registerCommand(new PlayerCheckCommand());
-        ClientCommandHandler.instance.registerCommand(new ViewTeammatesCommand());
         ClientCommandHandler.instance.registerCommand(new ClearTeammatesCommand());
         ClientCommandHandler.instance.registerCommand(new ReDetectTeammatesCommand());
-        ClientCommandHandler.instance.registerCommand(new CheckTntCommand());
-        ClientCommandHandler.instance.registerCommand(new CheckStateCommand());
+        ClientCommandHandler.instance.registerCommand(new HytilsDebugCommand());
         utils.runLobbyCheckerTimer();
         config.loadConfig();
         discordRPC.start();
