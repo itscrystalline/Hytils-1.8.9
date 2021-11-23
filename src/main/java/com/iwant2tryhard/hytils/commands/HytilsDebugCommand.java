@@ -125,52 +125,52 @@ public class HytilsDebugCommand extends CommandBase {
             } else if (args[0].equalsIgnoreCase("checkitem")) {
                 if (args.length > 1) {
                     if (args[1].equalsIgnoreCase("heads")) {
-                        ConcurrentHashMap<Integer, Float> heads = new ConcurrentHashMap<>(Hytils.instance.getUtils().headScoreMap);
+                        ConcurrentHashMap<Integer, Double> heads = new ConcurrentHashMap<>(Hytils.instance.getUtils().headScoreMap);
                         Utils.sendMessage(new ChatComponentText(EnumChatFormatting.GOLD + "[Hytils] " +
                                 EnumChatFormatting.GREEN + "Head Score Map: "));
-                        for (Map.Entry<Integer, Float> entry : heads.entrySet()) {
+                        for (Map.Entry<Integer, Double> entry : heads.entrySet()) {
                             Utils.sendMessage(new ChatComponentText(EnumChatFormatting.GOLD + "[Hytils]     " + EnumChatFormatting.GREEN + MessageFormat.format("Item Location: {0}, Score: {1}", entry.getKey(), entry.getValue())));
                         }
                     } else if (args[1].equalsIgnoreCase("chests")) {
-                        ConcurrentHashMap<Integer, Float> chests = new ConcurrentHashMap<>(Hytils.instance.getUtils().chestScoreMap);
+                        ConcurrentHashMap<Integer, Double> chests = new ConcurrentHashMap<>(Hytils.instance.getUtils().chestScoreMap);
                         Utils.sendMessage(new ChatComponentText(EnumChatFormatting.GOLD + "[Hytils] " +
                                 EnumChatFormatting.GREEN + "Chest Score Map: "));
-                        for (Map.Entry<Integer, Float> entry : chests.entrySet()) {
+                        for (Map.Entry<Integer, Double> entry : chests.entrySet()) {
                             Utils.sendMessage(new ChatComponentText(EnumChatFormatting.GOLD + "[Hytils]     " + EnumChatFormatting.GREEN + MessageFormat.format("Item Location: {0}, Score: {1}", entry.getKey(), entry.getValue())));
                         }
                     } else if (args[1].equalsIgnoreCase("legs")) {
-                        ConcurrentHashMap<Integer, Float> legs = new ConcurrentHashMap<>(Hytils.instance.getUtils().legsScoreMap);
+                        ConcurrentHashMap<Integer, Double> legs = new ConcurrentHashMap<>(Hytils.instance.getUtils().legsScoreMap);
                         Utils.sendMessage(new ChatComponentText(EnumChatFormatting.GOLD + "[Hytils] " +
                                 EnumChatFormatting.GREEN + "Legs Score Map: "));
-                        for (Map.Entry<Integer, Float> entry : legs.entrySet()) {
+                        for (Map.Entry<Integer, Double> entry : legs.entrySet()) {
                             Utils.sendMessage(new ChatComponentText(EnumChatFormatting.GOLD + "[Hytils]     " + EnumChatFormatting.GREEN + MessageFormat.format("Item Location: {0}, Score: {1}", entry.getKey(), entry.getValue())));
                         }
                     } else if (args[1].equalsIgnoreCase("feet")) {
-                        ConcurrentHashMap<Integer, Float> feet = new ConcurrentHashMap<>(Hytils.instance.getUtils().feetScoreMap);
+                        ConcurrentHashMap<Integer, Double> feet = new ConcurrentHashMap<>(Hytils.instance.getUtils().feetScoreMap);
                         Utils.sendMessage(new ChatComponentText(EnumChatFormatting.GOLD + "[Hytils] " +
                                 EnumChatFormatting.GREEN + "Feet Score Map: "));
-                        for (Map.Entry<Integer, Float> entry : feet.entrySet()) {
+                        for (Map.Entry<Integer, Double> entry : feet.entrySet()) {
                             Utils.sendMessage(new ChatComponentText(EnumChatFormatting.GOLD + "[Hytils]     " + EnumChatFormatting.GREEN + MessageFormat.format("Item Location: {0}, Score: {1}", entry.getKey(), entry.getValue())));
                         }
                     } else if (args[1].equalsIgnoreCase("swords")) {
-                        ConcurrentHashMap<Integer, Float> swords = new ConcurrentHashMap<>(Hytils.instance.getUtils().swordScoreMap);
+                        ConcurrentHashMap<Integer, Double> swords = new ConcurrentHashMap<>(Hytils.instance.getUtils().swordScoreMap);
                         Utils.sendMessage(new ChatComponentText(EnumChatFormatting.GOLD + "[Hytils] " +
                                 EnumChatFormatting.GREEN + "Swords Score Map: "));
-                        for (Map.Entry<Integer, Float> entry : swords.entrySet()) {
+                        for (Map.Entry<Integer, Double> entry : swords.entrySet()) {
                             Utils.sendMessage(new ChatComponentText(EnumChatFormatting.GOLD + "[Hytils]     " + EnumChatFormatting.GREEN + MessageFormat.format("Item Location: {0}, Score: {1}", entry.getKey(), entry.getValue())));
                         }
                     } else if (args[1].equalsIgnoreCase("bows")) {
-                        ConcurrentHashMap<Integer, Float> bows = new ConcurrentHashMap<>(Hytils.instance.getUtils().bowScoreMap);
+                        ConcurrentHashMap<Integer, Double> bows = new ConcurrentHashMap<>(Hytils.instance.getUtils().bowScoreMap);
                         Utils.sendMessage(new ChatComponentText(EnumChatFormatting.GOLD + "[Hytils] " +
                                 EnumChatFormatting.GREEN + "Bows Score Map: "));
-                        for (Map.Entry<Integer, Float> entry : bows.entrySet()) {
+                        for (Map.Entry<Integer, Double> entry : bows.entrySet()) {
                             Utils.sendMessage(new ChatComponentText(EnumChatFormatting.GOLD + "[Hytils]     " + EnumChatFormatting.GREEN + MessageFormat.format("Item Location: {0}, Score: {1}", entry.getKey(), entry.getValue())));
                         }
                     } else if (args[1].equalsIgnoreCase("rods")) {
-                        ConcurrentHashMap<Integer, Float> rods = new ConcurrentHashMap<>(Hytils.instance.getUtils().rodScoreMap);
+                        ConcurrentHashMap<Integer, Double> rods = new ConcurrentHashMap<>(Hytils.instance.getUtils().rodScoreMap);
                         Utils.sendMessage(new ChatComponentText(EnumChatFormatting.GOLD + "[Hytils] " +
                                 EnumChatFormatting.GREEN + "Rods Score Map: "));
-                        for (Map.Entry<Integer, Float> entry : rods.entrySet()) {
+                        for (Map.Entry<Integer, Double> entry : rods.entrySet()) {
                             Utils.sendMessage(new ChatComponentText(EnumChatFormatting.GOLD + "[Hytils]     " + EnumChatFormatting.GREEN + MessageFormat.format("Item Location: {0}, Score: {1}", entry.getKey(), entry.getValue())));
                         }
                     }
@@ -195,37 +195,37 @@ public class HytilsDebugCommand extends CommandBase {
     }
 
     public void getScoreMapForArmor(ItemStack itemstack) {
-        float maxResistanceScore = (4.0F * (Hytils.instance.getConfig()).equipmentHelperArmorResTierFavor + 8.0F * (Hytils.instance.getConfig()).equipmentHelperArmorResLevelFavor + 4.0F * (Hytils.instance.getConfig()).equipmentHelperArmorResLevelFavor) * (Hytils.instance.getConfig()).equipmentHelperArmorResFavor;
-        float maxDurabilityScore = (6.0F * (Hytils.instance.getConfig()).equipmentHelperArmorDurabilityTierFavor + 6.0F * (Hytils.instance.getConfig()).equipmentHelperArmorDurabilityLevelFavor) * (Hytils.instance.getConfig()).equipmentHelperArmorDurabilityFavor * 0.75F;
+        double maxResistanceScore = (4.0F * (Hytils.instance.getConfig()).equipmentHelperArmorResTierFavor + 8.0F * (Hytils.instance.getConfig()).equipmentHelperArmorResLevelFavor + 4.0F * (Hytils.instance.getConfig()).equipmentHelperArmorResLevelFavor) * (Hytils.instance.getConfig()).equipmentHelperArmorResFavor;
+        double maxDurabilityScore = (6.0F * (Hytils.instance.getConfig()).equipmentHelperArmorDurabilityTierFavor + 6.0F * (Hytils.instance.getConfig()).equipmentHelperArmorDurabilityLevelFavor) * (Hytils.instance.getConfig()).equipmentHelperArmorDurabilityFavor * 0.75F;
         Item item = itemstack.getItem();
-        float protectionScore = 0.0F;
-        float durabilityScore = 0.0F;
+        double protectionScore = 0.0F;
+        double durabilityScore = 0.0F;
         int protectionLevel = Utils.getEnchantmentLevel(itemstack, Enchantment.protection);
         int otherprotectionLevel = Utils.getEnchantmentLevel(itemstack, Enchantment.fireProtection) + Utils.getEnchantmentLevel(itemstack, Enchantment.blastProtection) + Utils.getEnchantmentLevel(itemstack, Enchantment.projectileProtection);
         int unbreakingLevel = Utils.getEnchantmentLevel(itemstack, Enchantment.unbreaking);
         if ((item == Items.leather_helmet) | (item == Items.leather_chestplate) | (item == Items.leather_leggings) | (item == Items.leather_boots)) {
-            float scoreProtectionRaw = (1.0F * (Hytils.instance.getConfig()).equipmentHelperArmorResTierFavor + (protectionLevel * 2) * (Hytils.instance.getConfig()).equipmentHelperArmorResLevelFavor + otherprotectionLevel * (Hytils.instance.getConfig()).equipmentHelperArmorResLevelFavor) * (Hytils.instance.getConfig()).equipmentHelperArmorResFavor;
-            float scoreDurabilityRaw = (2.0F * (Hytils.instance.getConfig()).equipmentHelperArmorDurabilityTierFavor + (unbreakingLevel * 2) * (Hytils.instance.getConfig()).equipmentHelperArmorDurabilityLevelFavor) * (Hytils.instance.getConfig()).equipmentHelperArmorDurabilityFavor * 0.5F;
-            protectionScore = scoreProtectionRaw / maxResistanceScore * 100.0F;
-            durabilityScore = scoreDurabilityRaw / maxDurabilityScore * 50.0F;
+            double scoreProtectionRaw = (1.0D * (Hytils.instance.getConfig()).equipmentHelperArmorResTierFavor + (protectionLevel * 2) * (Hytils.instance.getConfig()).equipmentHelperArmorResLevelFavor + otherprotectionLevel * (Hytils.instance.getConfig()).equipmentHelperArmorResLevelFavor) * (Hytils.instance.getConfig()).equipmentHelperArmorResFavor;
+            double scoreDurabilityRaw = (2.0D * (Hytils.instance.getConfig()).equipmentHelperArmorDurabilityTierFavor + (unbreakingLevel * 2) * (Hytils.instance.getConfig()).equipmentHelperArmorDurabilityLevelFavor) * (Hytils.instance.getConfig()).equipmentHelperArmorDurabilityFavor * 0.5D;
+            protectionScore = scoreProtectionRaw / maxResistanceScore * 100.0D;
+            durabilityScore = scoreDurabilityRaw / maxDurabilityScore * 50.0D;
         } else if ((item == Items.golden_helmet) | (item == Items.golden_chestplate) | (item == Items.golden_leggings) | (item == Items.golden_boots)) {
-            float scoreProtectionRaw = (1.0F * (Hytils.instance.getConfig()).equipmentHelperArmorResTierFavor + (protectionLevel * 2) * (Hytils.instance.getConfig()).equipmentHelperArmorResLevelFavor + otherprotectionLevel * (Hytils.instance.getConfig()).equipmentHelperArmorResLevelFavor) * (Hytils.instance.getConfig()).equipmentHelperArmorResFavor;
-            float scoreDurabilityRaw = (1.0F * (Hytils.instance.getConfig()).equipmentHelperArmorDurabilityTierFavor + (unbreakingLevel * 2) * (Hytils.instance.getConfig()).equipmentHelperArmorDurabilityLevelFavor) * (Hytils.instance.getConfig()).equipmentHelperArmorDurabilityFavor * 0.5F;
-            protectionScore = scoreProtectionRaw / maxResistanceScore * 100.0F;
-            durabilityScore = scoreDurabilityRaw / maxDurabilityScore * 50.0F;
+            double scoreProtectionRaw = (1.0D * (Hytils.instance.getConfig()).equipmentHelperArmorResTierFavor + (protectionLevel * 2) * (Hytils.instance.getConfig()).equipmentHelperArmorResLevelFavor + otherprotectionLevel * (Hytils.instance.getConfig()).equipmentHelperArmorResLevelFavor) * (Hytils.instance.getConfig()).equipmentHelperArmorResFavor;
+            double scoreDurabilityRaw = (1.0D * (Hytils.instance.getConfig()).equipmentHelperArmorDurabilityTierFavor + (unbreakingLevel * 2) * (Hytils.instance.getConfig()).equipmentHelperArmorDurabilityLevelFavor) * (Hytils.instance.getConfig()).equipmentHelperArmorDurabilityFavor * 0.5D;
+            protectionScore = scoreProtectionRaw / maxResistanceScore * 100.0D;
+            durabilityScore = scoreDurabilityRaw / maxDurabilityScore * 50.0D;
         } else if ((item == Items.chainmail_helmet) | (item == Items.chainmail_chestplate) | (item == Items.chainmail_leggings) | (item == Items.chainmail_boots)) {
-            float scoreProtectionRaw = (2.0F * (Hytils.instance.getConfig()).equipmentHelperArmorResTierFavor + (protectionLevel * 2) * (Hytils.instance.getConfig()).equipmentHelperArmorResLevelFavor + otherprotectionLevel * (Hytils.instance.getConfig()).equipmentHelperArmorResLevelFavor) * (Hytils.instance.getConfig()).equipmentHelperArmorResFavor;
-            float scoreDurabilityRaw = (3.0F * (Hytils.instance.getConfig()).equipmentHelperArmorDurabilityTierFavor + (unbreakingLevel * 2) * (Hytils.instance.getConfig()).equipmentHelperArmorDurabilityLevelFavor) * (Hytils.instance.getConfig()).equipmentHelperArmorDurabilityFavor * 0.5F;
-            protectionScore = scoreProtectionRaw / maxResistanceScore * 100.0F;
-            durabilityScore = scoreDurabilityRaw / maxDurabilityScore * 50.0F;
+            double scoreProtectionRaw = (2.0D * (Hytils.instance.getConfig()).equipmentHelperArmorResTierFavor + (protectionLevel * 2) * (Hytils.instance.getConfig()).equipmentHelperArmorResLevelFavor + otherprotectionLevel * (Hytils.instance.getConfig()).equipmentHelperArmorResLevelFavor) * (Hytils.instance.getConfig()).equipmentHelperArmorResFavor;
+            double scoreDurabilityRaw = (3.0D * (Hytils.instance.getConfig()).equipmentHelperArmorDurabilityTierFavor + (unbreakingLevel * 2) * (Hytils.instance.getConfig()).equipmentHelperArmorDurabilityLevelFavor) * (Hytils.instance.getConfig()).equipmentHelperArmorDurabilityFavor * 0.5D;
+            protectionScore = scoreProtectionRaw / maxResistanceScore * 100.0D;
+            durabilityScore = scoreDurabilityRaw / maxDurabilityScore * 50.0D;
         } else if ((item == Items.iron_helmet) | (item == Items.iron_chestplate) | (item == Items.iron_leggings) | (item == Items.iron_boots)) {
-            float scoreProtectionRaw = (2.0F * (Hytils.instance.getConfig()).equipmentHelperArmorResTierFavor + (protectionLevel * 2) * (Hytils.instance.getConfig()).equipmentHelperArmorResLevelFavor + otherprotectionLevel * (Hytils.instance.getConfig()).equipmentHelperArmorResLevelFavor) * (Hytils.instance.getConfig()).equipmentHelperArmorResFavor;
-            float scoreDurabilityRaw = (3.0F * (Hytils.instance.getConfig()).equipmentHelperArmorDurabilityTierFavor + (unbreakingLevel * 2) * (Hytils.instance.getConfig()).equipmentHelperArmorDurabilityLevelFavor) * (Hytils.instance.getConfig()).equipmentHelperArmorDurabilityFavor * 0.5F;
-            protectionScore = scoreProtectionRaw / maxResistanceScore * 100.0F;
-            durabilityScore = scoreDurabilityRaw / maxDurabilityScore * 50.0F;
+            double scoreProtectionRaw = (2.0D * (Hytils.instance.getConfig()).equipmentHelperArmorResTierFavor + (protectionLevel * 2) * (Hytils.instance.getConfig()).equipmentHelperArmorResLevelFavor + otherprotectionLevel * (Hytils.instance.getConfig()).equipmentHelperArmorResLevelFavor) * (Hytils.instance.getConfig()).equipmentHelperArmorResFavor;
+            double scoreDurabilityRaw = (3.0D * (Hytils.instance.getConfig()).equipmentHelperArmorDurabilityTierFavor + (unbreakingLevel * 2) * (Hytils.instance.getConfig()).equipmentHelperArmorDurabilityLevelFavor) * (Hytils.instance.getConfig()).equipmentHelperArmorDurabilityFavor * 0.5D;
+            protectionScore = scoreProtectionRaw / maxResistanceScore * 100.0D;
+            durabilityScore = scoreDurabilityRaw / maxDurabilityScore * 50.0D;
         } else if ((item == Items.diamond_helmet) | (item == Items.diamond_chestplate) | (item == Items.diamond_leggings) | (item == Items.diamond_boots)) {
-            float scoreProtectionRaw = (3.0F * (Hytils.instance.getConfig()).equipmentHelperArmorResTierFavor + (protectionLevel * 2) * (Hytils.instance.getConfig()).equipmentHelperArmorResLevelFavor + otherprotectionLevel * (Hytils.instance.getConfig()).equipmentHelperArmorResLevelFavor) * (Hytils.instance.getConfig()).equipmentHelperArmorResFavor;
-            float scoreDurabilityRaw = (4.0F * (Hytils.instance.getConfig()).equipmentHelperArmorDurabilityTierFavor + (unbreakingLevel * 2) * (Hytils.instance.getConfig()).equipmentHelperArmorDurabilityLevelFavor) * (Hytils.instance.getConfig()).equipmentHelperArmorDurabilityFavor * 0.5F;
+            double scoreProtectionRaw = (3.0D * (Hytils.instance.getConfig()).equipmentHelperArmorResTierFavor + (protectionLevel * 2) * (Hytils.instance.getConfig()).equipmentHelperArmorResLevelFavor + otherprotectionLevel * (Hytils.instance.getConfig()).equipmentHelperArmorResLevelFavor) * (Hytils.instance.getConfig()).equipmentHelperArmorResFavor;
+            double scoreDurabilityRaw = (4.0D * (Hytils.instance.getConfig()).equipmentHelperArmorDurabilityTierFavor + (unbreakingLevel * 2) * (Hytils.instance.getConfig()).equipmentHelperArmorDurabilityLevelFavor) * (Hytils.instance.getConfig()).equipmentHelperArmorDurabilityFavor * 0.5D;
             protectionScore = scoreProtectionRaw / maxResistanceScore * 100.0F;
             durabilityScore = scoreDurabilityRaw / maxDurabilityScore * 50.0F;
         }
