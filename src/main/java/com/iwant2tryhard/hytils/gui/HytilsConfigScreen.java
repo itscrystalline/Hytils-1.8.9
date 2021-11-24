@@ -14,12 +14,12 @@ public class HytilsConfigScreen extends GuiScreen {
     private final byte maxPages = 3;
     private byte page = 1;
 
-    private static double round(double value, int places) {
+    private static float round(double value, int places) {
         if (places < 0) throw new IllegalArgumentException();
 
         BigDecimal bd = BigDecimal.valueOf(value);
         bd = bd.setScale(places, RoundingMode.HALF_UP);
-        return bd.doubleValue();
+        return bd.floatValue();
     }
 
     @Override
@@ -31,7 +31,8 @@ public class HytilsConfigScreen extends GuiScreen {
         } else if (page == 2) {
             this.fontRendererObj.drawString("On Screen HUD", this.width / 2 - (this.fontRendererObj.getStringWidth("On Screen HUD") / 2), (this.height / 7 * 2) - 10, 16777215);
         } else if (page == 3) {
-            this.fontRendererObj.drawString("Equipment Helper", this.width / 2 - (this.fontRendererObj.getStringWidth("Equipment Helper") / 2), (this.height / 10) - 10, 16777215);
+            this.fontRendererObj.drawString("Equipment Helper", this.width / 2 - (this.fontRendererObj.getStringWidth("Equipment Helper") / 2), (this.height / 6) - 10, 16777215);
+            this.fontRendererObj.drawString("Hold Left Alt to decrease value", this.width / 2 - (this.fontRendererObj.getStringWidth("Hold Left Alt to decrease value") / 2), this.height - 60, 16777215);
         }
         this.fontRendererObj.drawString("Hytils version " + Hytils.VERSION, this.width / 2 - (this.fontRendererObj.getStringWidth("Hytils version " + Hytils.VERSION) / 2), this.height - 40, 16777215);
         this.fontRendererObj.drawString("Page " + page + "/" + maxPages, this.width / 2 - (this.fontRendererObj.getStringWidth("Page " + page + "/" + maxPages) / 2), this.height - 20, 16777215);
@@ -58,38 +59,67 @@ public class HytilsConfigScreen extends GuiScreen {
         GuiButton buttonOnScreenHUDLevelBar = new GuiButton(12, this.width / 2 - 205, (this.height / 7 * 2) + 60, "Level Bar: " + (Hytils.instance.getConfig().showCustomLevelBar ? EnumChatFormatting.GREEN + "True" : EnumChatFormatting.RED + "False"));
 
         //page 3
-        GuiButton buttonEquipmentHelperEnabled = new GuiButton(13, this.width / 2 - 205, (this.height / 10) + 10, "Enabled: " + (Hytils.instance.getConfig().equipmentHelperEnabled ? EnumChatFormatting.GREEN + "True" : EnumChatFormatting.RED + "False"));
-        GuiButton buttonEquipmentHelperOnlyBestMode = new GuiButton(14, this.width / 2 + 5, (this.height / 10) + 10, "Only Best Mode: " + (Hytils.instance.getConfig().equipmentHelperOnlyBestMode ? EnumChatFormatting.GREEN + "True" : EnumChatFormatting.RED + "False"));
+        GuiButton buttonEquipmentHelperEnabled = new GuiButton(13, this.width / 2 - 205, (this.height / 6) + 10, "Enabled: " + (Hytils.instance.getConfig().equipmentHelperEnabled ? EnumChatFormatting.GREEN + "True" : EnumChatFormatting.RED + "False"));
+        GuiButton buttonEquipmentHelperOnlyBestMode = new GuiButton(14, this.width / 2 + 5, (this.height / 6) + 10, "Only Best Mode: " + (Hytils.instance.getConfig().equipmentHelperOnlyBestMode ? EnumChatFormatting.GREEN + "True" : EnumChatFormatting.RED + "False"));
 
-        GuiButton buttonEquipmentHelperWeaponDamageCheck = new GuiButton(15, this.width / 2 - 305, (this.height / 10) + 40, "Weapon Damage Check: " + (Hytils.instance.getConfig().equipmentHelperWeaponDamageCheck ? EnumChatFormatting.GREEN + "True" : EnumChatFormatting.RED + "False"));
-        GuiButton buttonEquipmentHelperWeaponDamageFavor = new GuiButton(16, this.width / 2 - 305, (this.height / 10) + 65, "Weapon Damage Overall Favor: " + EnumChatFormatting.YELLOW + Hytils.instance.getConfig().equipmentHelperWeaponDamageFavor);
-        GuiButton buttonEquipmentHelperWeaponDamageTierFavor = new GuiButton(17, this.width / 2 - 305, (this.height / 10) + 90, "Weapon Damage Tier Favor: " + EnumChatFormatting.YELLOW + Hytils.instance.getConfig().equipmentHelperWeaponDamageTierFavor);
-        GuiButton buttonEquipmentHelperWeaponDamageLevelFavor = new GuiButton(18, this.width / 2 - 305, (this.height / 10) + 115, "Weapon Damage Level Favor: " + EnumChatFormatting.YELLOW + Hytils.instance.getConfig().equipmentHelperWeaponDamageLevelFavor);
+        GuiButton buttonEquipmentHelperWeaponDamageCheck = new GuiButton(15, this.width / 2 - 305, (this.height / 6) + 40, "Weapon Damage Check: " + (Hytils.instance.getConfig().equipmentHelperWeaponDamageCheck ? EnumChatFormatting.GREEN + "True" : EnumChatFormatting.RED + "False"));
+        GuiButton buttonEquipmentHelperWeaponDamageFavor = new GuiButton(16, this.width / 2 - 305, (this.height / 6) + 65, "Weapon Damage Overall Favor: " + EnumChatFormatting.YELLOW + Hytils.instance.getConfig().equipmentHelperWeaponDamageFavor);
+        GuiButton buttonEquipmentHelperWeaponDamageTierFavor = new GuiButton(17, this.width / 2 - 305, (this.height / 6) + 90, "Weapon Damage Tier Favor: " + EnumChatFormatting.YELLOW + Hytils.instance.getConfig().equipmentHelperWeaponDamageTierFavor);
+        GuiButton buttonEquipmentHelperWeaponDamageLevelFavor = new GuiButton(18, this.width / 2 - 305, (this.height / 6) + 115, "Weapon Damage Level Favor: " + EnumChatFormatting.YELLOW + Hytils.instance.getConfig().equipmentHelperWeaponDamageLevelFavor);
 
-        GuiButton buttonEquipmentHelperWeaponDurabilityCheck = new GuiButton(19, this.width / 2 - 305, (this.height / 10) + 140, "Weapon Durability Check: " + (Hytils.instance.getConfig().equipmentHelperWeaponDurabilityCheck ? EnumChatFormatting.GREEN + "True" : EnumChatFormatting.RED + "False"));
-        GuiButton buttonEquipmentHelperWeaponDurabilityFavor = new GuiButton(20, this.width / 2 - 305, (this.height / 10) + 165, "Weapon Durability Overall Favor: " + EnumChatFormatting.YELLOW + Hytils.instance.getConfig().equipmentHelperWeaponDurabilityFavor);
-        GuiButton buttonEquipmentHelperWeaponDurabilityTierFavor = new GuiButton(21, this.width / 2 - 305, (this.height / 10) + 190, "Weapon Durability Tier Favor: " + EnumChatFormatting.YELLOW + Hytils.instance.getConfig().equipmentHelperWeaponDurabilityTierFavor);
-        GuiButton buttonEquipmentHelperWeaponDurabilityLevelFavor = new GuiButton(22, this.width / 2 - 305, (this.height / 10) + 215, "Weapon Durability Level Favor: " + EnumChatFormatting.YELLOW + Hytils.instance.getConfig().equipmentHelperWeaponDurabilityLevelFavor);
+        GuiButton buttonEquipmentHelperWeaponDurabilityCheck = new GuiButton(19, this.width / 2 - 305, (this.height / 6) + 140, "Weapon Durability Check: " + (Hytils.instance.getConfig().equipmentHelperWeaponDurabilityCheck ? EnumChatFormatting.GREEN + "True" : EnumChatFormatting.RED + "False"));
+        GuiButton buttonEquipmentHelperWeaponDurabilityFavor = new GuiButton(20, this.width / 2 - 305, (this.height / 6) + 165, "Weapon Durability Overall Favor: " + EnumChatFormatting.YELLOW + Hytils.instance.getConfig().equipmentHelperWeaponDurabilityFavor);
+        GuiButton buttonEquipmentHelperWeaponDurabilityTierFavor = new GuiButton(21, this.width / 2 - 305, (this.height / 6) + 190, "Weapon Durability Tier Favor: " + EnumChatFormatting.YELLOW + Hytils.instance.getConfig().equipmentHelperWeaponDurabilityTierFavor);
+        GuiButton buttonEquipmentHelperWeaponDurabilityLevelFavor = new GuiButton(22, this.width / 2 - 305, (this.height / 6) + 215, "Weapon Durability Level Favor: " + EnumChatFormatting.YELLOW + Hytils.instance.getConfig().equipmentHelperWeaponDurabilityLevelFavor);
 
-        GuiButton buttonEquipmentHelperWeaponKnockbackCheck = new GuiButton(23, this.width / 2 - 305, (this.height / 10) + 240, "Weapon Knockback Check: " + (Hytils.instance.getConfig().equipmentHelperWeaponKnockbackCheck ? EnumChatFormatting.GREEN + "True" : EnumChatFormatting.RED + "False"));
-        GuiButton buttonEquipmentHelperWeaponKnockbackFavor = new GuiButton(24, this.width / 2 - 305, (this.height / 10) + 265, "Weapon Knockback Overall Favor: " + EnumChatFormatting.YELLOW + Hytils.instance.getConfig().equipmentHelperWeaponKnockbackFavor);
+        GuiButton buttonEquipmentHelperWeaponKnockbackCheck = new GuiButton(23, this.width / 2 - 305, (this.height / 6) + 240, "Weapon Knockback Check: " + (Hytils.instance.getConfig().equipmentHelperWeaponKnockbackCheck ? EnumChatFormatting.GREEN + "True" : EnumChatFormatting.RED + "False"));
+        GuiButton buttonEquipmentHelperWeaponKnockbackFavor = new GuiButton(24, this.width / 2 - 305, (this.height / 6) + 265, "Weapon Knockback Overall Favor: " + EnumChatFormatting.YELLOW + Hytils.instance.getConfig().equipmentHelperWeaponKnockbackFavor);
 
-        GuiButton buttonEquipmentHelperArmorResCheck = new GuiButton(25, this.width / 2 - 100, (this.height / 10) + 40, "Armor Resistance Check: " + (Hytils.instance.getConfig().equipmentHelperArmorResCheck ? EnumChatFormatting.GREEN + "True" : EnumChatFormatting.RED + "False"));
+        GuiButton buttonEquipmentHelperArmorResCheck = new GuiButton(25, this.width / 2 - 100, (this.height / 6) + 40, "Armor Resistance Check: " + (Hytils.instance.getConfig().equipmentHelperArmorResCheck ? EnumChatFormatting.GREEN + "True" : EnumChatFormatting.RED + "False"));
+        GuiButton buttonEquipmentHelperArmorResFavor = new GuiButton(26, this.width / 2 - 100, (this.height / 6) + 65, "Armor Resistance Overall Favor: " + EnumChatFormatting.YELLOW + Hytils.instance.getConfig().equipmentHelperArmorResFavor);
+        GuiButton buttonEquipmentHelperArmorResTierFavor = new GuiButton(27, this.width / 2 - 100, (this.height / 6) + 90, "Armor Resistance Tier Favor: " + EnumChatFormatting.YELLOW + Hytils.instance.getConfig().equipmentHelperArmorResTierFavor);
+        GuiButton buttonEquipmentHelperArmorResLevelFavor = new GuiButton(28, this.width / 2 - 100, (this.height / 6) + 115, "Armor Resistance Level Favor: " + EnumChatFormatting.YELLOW + Hytils.instance.getConfig().equipmentHelperArmorResLevelFavor);
 
-        GuiButton buttonEquipmentHelperRodKnockbackCheck = new GuiButton(26, this.width / 2 + 105, (this.height / 10) + 40, "Rod Knockback Check: " + (Hytils.instance.getConfig().equipmentHelperRodKnockbackCheck ? EnumChatFormatting.GREEN + "True" : EnumChatFormatting.RED + "False"));
+        GuiButton buttonEquipmentHelperArmorDurabilityCheck = new GuiButton(29, this.width / 2 - 100, (this.height / 6) + 140, "Armor Durability Check: " + (Hytils.instance.getConfig().equipmentHelperArmorDurabilityCheck ? EnumChatFormatting.GREEN + "True" : EnumChatFormatting.RED + "False"));
+        GuiButton buttonEquipmentHelperArmorDurabilityFavor = new GuiButton(30, this.width / 2 - 100, (this.height / 6) + 165, "Armor Durability Overall Favor: " + EnumChatFormatting.YELLOW + Hytils.instance.getConfig().equipmentHelperArmorDurabilityFavor);
+        GuiButton buttonEquipmentHelperArmorDurabilityTierFavor = new GuiButton(31, this.width / 2 - 100, (this.height / 6) + 190, "Armor Durability Tier Favor: " + EnumChatFormatting.YELLOW + Hytils.instance.getConfig().equipmentHelperArmorDurabilityTierFavor);
+        GuiButton buttonEquipmentHelperArmorDurabilityLevelFavor = new GuiButton(32, this.width / 2 - 100, (this.height / 6) + 215, "Armor Durability Level Favor: " + EnumChatFormatting.YELLOW + Hytils.instance.getConfig().equipmentHelperArmorDurabilityLevelFavor);
+
+        GuiButton buttonEquipmentHelperRodDurabilityCheck = new GuiButton(33, this.width / 2 + 105, (this.height / 6) + 40, "Fishing Rod Durability Check: " + (Hytils.instance.getConfig().equipmentHelperRodDurabilityCheck ? EnumChatFormatting.GREEN + "True" : EnumChatFormatting.RED + "False"));
+        GuiButton buttonEquipmentHelperRodDurabilityFavor = new GuiButton(34, this.width / 2 + 105, (this.height / 6) + 65, "Fishing Rod Durability Favor: " + EnumChatFormatting.YELLOW + Hytils.instance.getConfig().equipmentHelperRodDurabilityFavor);
+
+        GuiButton buttonEquipmentHelperRodKnockbackCheck = new GuiButton(35, this.width / 2 + 105, (this.height / 6) + 90, "Fishing Rod Knockback Check: " + (Hytils.instance.getConfig().equipmentHelperRodKnockbackCheck ? EnumChatFormatting.GREEN + "True" : EnumChatFormatting.RED + "False"));
+        GuiButton buttonEquipmentHelperRodKnockbackFavor = new GuiButton(36, this.width / 2 + 105, (this.height / 6) + 115, "Fishing Rod Knockback Favor: " + EnumChatFormatting.YELLOW + Hytils.instance.getConfig().equipmentHelperRodKnockbackFavor);
 
         GuiButton buttonPrevious = new GuiButton(-1, 10, this.height - 30, 100, 20, "Previous");
         GuiButton buttonNext = new GuiButton(-2, this.width - 110, this.height - 30, 100, 20, "Next");
 
         buttonTeammateHUDEnabled.enabled = !Hytils.instance.getConfig().teammateHUDCheckGame;
 
-        buttonEquipmentHelperWeaponDamageFavor.enabled = Hytils.instance.getConfig().equipmentHelperWeaponDamageCheck;
-        buttonEquipmentHelperWeaponDamageTierFavor.enabled = Hytils.instance.getConfig().equipmentHelperWeaponDamageCheck;
-        buttonEquipmentHelperWeaponDamageLevelFavor.enabled = Hytils.instance.getConfig().equipmentHelperWeaponDamageCheck;
-        buttonEquipmentHelperWeaponDurabilityFavor.enabled = Hytils.instance.getConfig().equipmentHelperWeaponDurabilityCheck;
-        buttonEquipmentHelperWeaponDurabilityTierFavor.enabled = Hytils.instance.getConfig().equipmentHelperWeaponDurabilityCheck;
-        buttonEquipmentHelperWeaponDurabilityLevelFavor.enabled = Hytils.instance.getConfig().equipmentHelperWeaponDurabilityCheck;
-        buttonEquipmentHelperWeaponKnockbackFavor.enabled = Hytils.instance.getConfig().equipmentHelperWeaponKnockbackCheck;
+        buttonEquipmentHelperWeaponDamageCheck.enabled = Hytils.instance.getConfig().equipmentHelperEnabled;
+        buttonEquipmentHelperWeaponDamageFavor.enabled = Hytils.instance.getConfig().equipmentHelperEnabled && Hytils.instance.getConfig().equipmentHelperWeaponDamageCheck;
+        buttonEquipmentHelperWeaponDamageTierFavor.enabled = Hytils.instance.getConfig().equipmentHelperEnabled && Hytils.instance.getConfig().equipmentHelperWeaponDamageCheck;
+        buttonEquipmentHelperWeaponDamageLevelFavor.enabled = Hytils.instance.getConfig().equipmentHelperEnabled && Hytils.instance.getConfig().equipmentHelperWeaponDamageCheck;
+        buttonEquipmentHelperWeaponDurabilityCheck.enabled = Hytils.instance.getConfig().equipmentHelperEnabled;
+        buttonEquipmentHelperWeaponDurabilityFavor.enabled = Hytils.instance.getConfig().equipmentHelperEnabled && Hytils.instance.getConfig().equipmentHelperWeaponDurabilityCheck;
+        buttonEquipmentHelperWeaponDurabilityTierFavor.enabled = Hytils.instance.getConfig().equipmentHelperEnabled && Hytils.instance.getConfig().equipmentHelperWeaponDurabilityCheck;
+        buttonEquipmentHelperWeaponDurabilityLevelFavor.enabled = Hytils.instance.getConfig().equipmentHelperEnabled && Hytils.instance.getConfig().equipmentHelperWeaponDurabilityCheck;
+        buttonEquipmentHelperWeaponKnockbackCheck.enabled = Hytils.instance.getConfig().equipmentHelperEnabled;
+        buttonEquipmentHelperWeaponKnockbackFavor.enabled = Hytils.instance.getConfig().equipmentHelperEnabled && Hytils.instance.getConfig().equipmentHelperWeaponKnockbackCheck;
+
+        buttonEquipmentHelperArmorResCheck.enabled = Hytils.instance.getConfig().equipmentHelperEnabled;
+        buttonEquipmentHelperArmorResFavor.enabled = Hytils.instance.getConfig().equipmentHelperEnabled && Hytils.instance.getConfig().equipmentHelperArmorResCheck;
+        buttonEquipmentHelperArmorResTierFavor.enabled = Hytils.instance.getConfig().equipmentHelperEnabled && Hytils.instance.getConfig().equipmentHelperArmorResCheck;
+        buttonEquipmentHelperArmorResLevelFavor.enabled = Hytils.instance.getConfig().equipmentHelperEnabled && Hytils.instance.getConfig().equipmentHelperArmorResCheck;
+        buttonEquipmentHelperArmorDurabilityCheck.enabled = Hytils.instance.getConfig().equipmentHelperEnabled;
+        buttonEquipmentHelperArmorDurabilityFavor.enabled = Hytils.instance.getConfig().equipmentHelperEnabled && Hytils.instance.getConfig().equipmentHelperArmorDurabilityCheck;
+        buttonEquipmentHelperArmorDurabilityTierFavor.enabled = Hytils.instance.getConfig().equipmentHelperEnabled && Hytils.instance.getConfig().equipmentHelperArmorDurabilityCheck;
+        buttonEquipmentHelperArmorDurabilityLevelFavor.enabled = Hytils.instance.getConfig().equipmentHelperEnabled && Hytils.instance.getConfig().equipmentHelperArmorDurabilityCheck;
+
+        buttonEquipmentHelperRodKnockbackCheck.enabled = Hytils.instance.getConfig().equipmentHelperEnabled;
+        buttonEquipmentHelperRodKnockbackFavor.enabled = Hytils.instance.getConfig().equipmentHelperEnabled && Hytils.instance.getConfig().equipmentHelperRodKnockbackCheck;
+        buttonEquipmentHelperRodDurabilityCheck.enabled = Hytils.instance.getConfig().equipmentHelperEnabled;
+        buttonEquipmentHelperRodDurabilityFavor.enabled = Hytils.instance.getConfig().equipmentHelperEnabled && Hytils.instance.getConfig().equipmentHelperRodDurabilityCheck;
 
         buttonPrevious.enabled = page > 1;
         buttonNext.enabled = !(page >= maxPages);
@@ -127,9 +157,18 @@ public class HytilsConfigScreen extends GuiScreen {
             this.buttonList.add(buttonEquipmentHelperWeaponKnockbackFavor);
 
             this.buttonList.add(buttonEquipmentHelperArmorResCheck);
+            this.buttonList.add(buttonEquipmentHelperArmorResFavor);
+            this.buttonList.add(buttonEquipmentHelperArmorResTierFavor);
+            this.buttonList.add(buttonEquipmentHelperArmorResLevelFavor);
+            this.buttonList.add(buttonEquipmentHelperArmorDurabilityCheck);
+            this.buttonList.add(buttonEquipmentHelperArmorDurabilityFavor);
+            this.buttonList.add(buttonEquipmentHelperArmorDurabilityTierFavor);
+            this.buttonList.add(buttonEquipmentHelperArmorDurabilityLevelFavor);
 
+            this.buttonList.add(buttonEquipmentHelperRodDurabilityCheck);
+            this.buttonList.add(buttonEquipmentHelperRodDurabilityFavor);
             this.buttonList.add(buttonEquipmentHelperRodKnockbackCheck);
-
+            this.buttonList.add(buttonEquipmentHelperRodKnockbackFavor);
         }
 
         this.buttonList.add(buttonPrevious);
@@ -206,88 +245,264 @@ public class HytilsConfigScreen extends GuiScreen {
                     Hytils.instance.getConfig().equipmentHelperWeaponDamageCheck = !Hytils.instance.getConfig().equipmentHelperWeaponDamageCheck;
                     break;
                 case 16:
-                    if (Hytils.instance.getConfig().equipmentHelperWeaponDamageFavor < 2f && Hytils.instance.getConfig().equipmentHelperWeaponDamageFavor >= 1f) {
-                        if (Keyboard.isKeyDown(Keyboard.KEY_LMENU)) {
-                            Hytils.instance.getConfig().equipmentHelperWeaponDamageFavor -= 0.05D;
+                    if (!Keyboard.isKeyDown(Keyboard.KEY_LMENU)) {
+                        if (Hytils.instance.getConfig().equipmentHelperWeaponDamageFavor >= 2f) {
+                            Hytils.instance.getConfig().equipmentHelperWeaponDamageFavor = 1f;
                         } else {
                             Hytils.instance.getConfig().equipmentHelperWeaponDamageFavor += 0.05D;
                         }
-                        Hytils.instance.getConfig().equipmentHelperWeaponDamageFavor = round(Hytils.instance.getConfig().equipmentHelperWeaponDamageFavor, 2);
-                    } else if (Hytils.instance.getConfig().equipmentHelperWeaponDamageFavor > 2f) {
-                        Hytils.instance.getConfig().equipmentHelperWeaponDamageFavor = 1f;
-                    } else if (Hytils.instance.getConfig().equipmentHelperWeaponDamageFavor < 1f) {
-                        Hytils.instance.getConfig().equipmentHelperWeaponDamageFavor = 2f;
+                    } else {
+                        if (Hytils.instance.getConfig().equipmentHelperWeaponDamageFavor <= 1f) {
+                            Hytils.instance.getConfig().equipmentHelperWeaponDamageFavor = 2f;
+                        } else {
+                            Hytils.instance.getConfig().equipmentHelperWeaponDamageFavor -= 0.05D;
+                        }
                     }
+                    Hytils.instance.getConfig().equipmentHelperWeaponDamageFavor = round(Hytils.instance.getConfig().equipmentHelperWeaponDamageFavor, 2);
                     break;
                 case 17:
-                    if (Hytils.instance.getConfig().equipmentHelperWeaponDamageTierFavor < 2f && Hytils.instance.getConfig().equipmentHelperWeaponDamageTierFavor >= 1f) {
-                        if (Keyboard.isKeyDown(Keyboard.KEY_LMENU)) {
-                            Hytils.instance.getConfig().equipmentHelperWeaponDamageTierFavor -= 0.05D;
+                    if (!Keyboard.isKeyDown(Keyboard.KEY_LMENU)) {
+                        if (Hytils.instance.getConfig().equipmentHelperWeaponDamageTierFavor >= 2f) {
+                            Hytils.instance.getConfig().equipmentHelperWeaponDamageTierFavor = 1f;
                         } else {
                             Hytils.instance.getConfig().equipmentHelperWeaponDamageTierFavor += 0.05D;
                         }
-                    } else if (Hytils.instance.getConfig().equipmentHelperWeaponDamageTierFavor > 2f) {
-                        Hytils.instance.getConfig().equipmentHelperWeaponDamageTierFavor = 1f;
-                    } else if (Hytils.instance.getConfig().equipmentHelperWeaponDamageTierFavor < 1f) {
-                        Hytils.instance.getConfig().equipmentHelperWeaponDamageTierFavor = 2f;
+                    } else {
+                        if (Hytils.instance.getConfig().equipmentHelperWeaponDamageTierFavor <= 1f) {
+                            Hytils.instance.getConfig().equipmentHelperWeaponDamageTierFavor = 2f;
+                        } else {
+                            Hytils.instance.getConfig().equipmentHelperWeaponDamageTierFavor -= 0.05D;
+                        }
                     }
+                    Hytils.instance.getConfig().equipmentHelperWeaponDamageTierFavor = round(Hytils.instance.getConfig().equipmentHelperWeaponDamageTierFavor, 2);
                     break;
                 case 18:
-                    if (Hytils.instance.getConfig().equipmentHelperWeaponDamageLevelFavor < 2f && Hytils.instance.getConfig().equipmentHelperWeaponDamageLevelFavor >= 1f) {
-                        if (Keyboard.isKeyDown(Keyboard.KEY_LMENU)) {
-                            Hytils.instance.getConfig().equipmentHelperWeaponDamageLevelFavor -= 0.05D;
+                    if (!Keyboard.isKeyDown(Keyboard.KEY_LMENU)) {
+                        if (Hytils.instance.getConfig().equipmentHelperWeaponDamageLevelFavor >= 2f) {
+                            Hytils.instance.getConfig().equipmentHelperWeaponDamageLevelFavor = 1f;
                         } else {
                             Hytils.instance.getConfig().equipmentHelperWeaponDamageLevelFavor += 0.05D;
                         }
-                    } else if (Hytils.instance.getConfig().equipmentHelperWeaponDamageLevelFavor > 2f) {
-                        Hytils.instance.getConfig().equipmentHelperWeaponDamageLevelFavor = 1f;
-                    } else if (Hytils.instance.getConfig().equipmentHelperWeaponDamageLevelFavor < 1f) {
-                        Hytils.instance.getConfig().equipmentHelperWeaponDamageLevelFavor = 2f;
+                    } else {
+                        if (Hytils.instance.getConfig().equipmentHelperWeaponDamageLevelFavor <= 1f) {
+                            Hytils.instance.getConfig().equipmentHelperWeaponDamageLevelFavor = 2f;
+                        } else {
+                            Hytils.instance.getConfig().equipmentHelperWeaponDamageLevelFavor -= 0.05D;
+                        }
                     }
+                    Hytils.instance.getConfig().equipmentHelperWeaponDamageLevelFavor = round(Hytils.instance.getConfig().equipmentHelperWeaponDamageLevelFavor, 2);
                     break;
                 case 19:
                     Hytils.instance.getConfig().equipmentHelperWeaponDurabilityCheck = !Hytils.instance.getConfig().equipmentHelperWeaponDurabilityCheck;
                     break;
                 case 20:
-                    if (Hytils.instance.getConfig().equipmentHelperWeaponDurabilityFavor < 2f) {
-                        Hytils.instance.getConfig().equipmentHelperWeaponDurabilityFavor += 0.05D;
-                        Hytils.instance.getConfig().equipmentHelperWeaponDurabilityFavor = round(Hytils.instance.getConfig().equipmentHelperWeaponDurabilityFavor, 2);
+                    if (!Keyboard.isKeyDown(Keyboard.KEY_LMENU)) {
+                        if (Hytils.instance.getConfig().equipmentHelperWeaponDurabilityFavor >= 2f) {
+                            Hytils.instance.getConfig().equipmentHelperWeaponDurabilityFavor = 1f;
+                        } else {
+                            Hytils.instance.getConfig().equipmentHelperWeaponDurabilityFavor += 0.05D;
+                        }
                     } else {
-                        Hytils.instance.getConfig().equipmentHelperWeaponDurabilityFavor = 1f;
+                        if (Hytils.instance.getConfig().equipmentHelperWeaponDurabilityFavor <= 1f) {
+                            Hytils.instance.getConfig().equipmentHelperWeaponDurabilityFavor = 2f;
+                        } else {
+                            Hytils.instance.getConfig().equipmentHelperWeaponDurabilityFavor -= 0.05D;
+                        }
                     }
+                    Hytils.instance.getConfig().equipmentHelperWeaponDurabilityFavor = round(Hytils.instance.getConfig().equipmentHelperWeaponDurabilityFavor, 2);
                     break;
                 case 21:
-                    if (Hytils.instance.getConfig().equipmentHelperWeaponDurabilityTierFavor < 2f) {
-                        Hytils.instance.getConfig().equipmentHelperWeaponDurabilityTierFavor += 0.05D;
-                        Hytils.instance.getConfig().equipmentHelperWeaponDurabilityTierFavor = round(Hytils.instance.getConfig().equipmentHelperWeaponDurabilityTierFavor, 2);
+                    if (!Keyboard.isKeyDown(Keyboard.KEY_LMENU)) {
+                        if (Hytils.instance.getConfig().equipmentHelperWeaponDurabilityTierFavor >= 2f) {
+                            Hytils.instance.getConfig().equipmentHelperWeaponDurabilityTierFavor = 1f;
+                        } else {
+                            Hytils.instance.getConfig().equipmentHelperWeaponDurabilityTierFavor += 0.05D;
+                        }
                     } else {
-                        Hytils.instance.getConfig().equipmentHelperWeaponDurabilityTierFavor = 1f;
+                        if (Hytils.instance.getConfig().equipmentHelperWeaponDurabilityTierFavor <= 1f) {
+                            Hytils.instance.getConfig().equipmentHelperWeaponDurabilityTierFavor = 2f;
+                        } else {
+                            Hytils.instance.getConfig().equipmentHelperWeaponDurabilityTierFavor -= 0.05D;
+                        }
                     }
+                    Hytils.instance.getConfig().equipmentHelperWeaponDurabilityTierFavor = round(Hytils.instance.getConfig().equipmentHelperWeaponDurabilityTierFavor, 2);
                     break;
+
                 case 22:
-                    if (Hytils.instance.getConfig().equipmentHelperWeaponDurabilityLevelFavor < 2f) {
-                        Hytils.instance.getConfig().equipmentHelperWeaponDurabilityLevelFavor += 0.05D;
-                        Hytils.instance.getConfig().equipmentHelperWeaponDurabilityLevelFavor = round(Hytils.instance.getConfig().equipmentHelperWeaponDurabilityLevelFavor, 2);
+                    if (!Keyboard.isKeyDown(Keyboard.KEY_LMENU)) {
+                        if (Hytils.instance.getConfig().equipmentHelperWeaponDurabilityLevelFavor >= 2f) {
+                            Hytils.instance.getConfig().equipmentHelperWeaponDurabilityLevelFavor = 1f;
+                        } else {
+                            Hytils.instance.getConfig().equipmentHelperWeaponDurabilityLevelFavor += 0.05D;
+                        }
                     } else {
-                        Hytils.instance.getConfig().equipmentHelperWeaponDurabilityLevelFavor = 1f;
+                        if (Hytils.instance.getConfig().equipmentHelperWeaponDurabilityLevelFavor <= 1f) {
+                            Hytils.instance.getConfig().equipmentHelperWeaponDurabilityLevelFavor = 2f;
+                        } else {
+                            Hytils.instance.getConfig().equipmentHelperWeaponDurabilityLevelFavor -= 0.05D;
+                        }
                     }
+                    Hytils.instance.getConfig().equipmentHelperWeaponDurabilityLevelFavor = round(Hytils.instance.getConfig().equipmentHelperWeaponDurabilityLevelFavor, 2);
                     break;
                 case 23:
                     Hytils.instance.getConfig().equipmentHelperWeaponKnockbackCheck = !Hytils.instance.getConfig().equipmentHelperWeaponKnockbackCheck;
                     break;
                 case 24:
-                    if (Hytils.instance.getConfig().equipmentHelperWeaponKnockbackFavor < 2f) {
-                        Hytils.instance.getConfig().equipmentHelperWeaponKnockbackFavor += 0.05D;
-                        Hytils.instance.getConfig().equipmentHelperWeaponKnockbackFavor = round(Hytils.instance.getConfig().equipmentHelperWeaponKnockbackFavor, 2);
+                    if (!Keyboard.isKeyDown(Keyboard.KEY_LMENU)) {
+                        if (Hytils.instance.getConfig().equipmentHelperWeaponKnockbackFavor >= 2f) {
+                            Hytils.instance.getConfig().equipmentHelperWeaponKnockbackFavor = 1f;
+                        } else {
+                            Hytils.instance.getConfig().equipmentHelperWeaponKnockbackFavor += 0.05D;
+                        }
                     } else {
-                        Hytils.instance.getConfig().equipmentHelperWeaponKnockbackFavor = 1f;
+                        if (Hytils.instance.getConfig().equipmentHelperWeaponKnockbackFavor <= 1D) {
+                            Hytils.instance.getConfig().equipmentHelperWeaponKnockbackFavor = 2f;
+                        } else {
+                            Hytils.instance.getConfig().equipmentHelperWeaponKnockbackFavor -= 0.05D;
+                        }
                     }
+                    Hytils.instance.getConfig().equipmentHelperWeaponKnockbackFavor = round(Hytils.instance.getConfig().equipmentHelperWeaponKnockbackFavor, 2);
                     break;
                 case 25:
                     Hytils.instance.getConfig().equipmentHelperArmorResCheck = !Hytils.instance.getConfig().equipmentHelperArmorResCheck;
                     break;
                 case 26:
+                    if (!Keyboard.isKeyDown(Keyboard.KEY_LMENU)) {
+                        if (Hytils.instance.getConfig().equipmentHelperArmorResFavor >= 2f) {
+                            Hytils.instance.getConfig().equipmentHelperArmorResFavor = 1f;
+                        } else {
+                            Hytils.instance.getConfig().equipmentHelperArmorResFavor += 0.05D;
+                        }
+                    } else {
+                        if (Hytils.instance.getConfig().equipmentHelperArmorResFavor <= 1f) {
+                            Hytils.instance.getConfig().equipmentHelperArmorResFavor = 2f;
+                        } else {
+                            Hytils.instance.getConfig().equipmentHelperArmorResFavor -= 0.05D;
+                        }
+                    }
+                    Hytils.instance.getConfig().equipmentHelperArmorResFavor = round(Hytils.instance.getConfig().equipmentHelperArmorResFavor, 2);
+                    break;
+                case 27:
+                    if (!Keyboard.isKeyDown(Keyboard.KEY_LMENU)) {
+                        if (Hytils.instance.getConfig().equipmentHelperArmorResTierFavor >= 2f) {
+                            Hytils.instance.getConfig().equipmentHelperArmorResTierFavor = 1f;
+                        } else {
+                            Hytils.instance.getConfig().equipmentHelperArmorResTierFavor += 0.05D;
+                        }
+                    } else {
+                        if (Hytils.instance.getConfig().equipmentHelperArmorResTierFavor <= 1f) {
+                            Hytils.instance.getConfig().equipmentHelperArmorResTierFavor = 2f;
+                        } else {
+                            Hytils.instance.getConfig().equipmentHelperArmorResTierFavor -= 0.05D;
+                        }
+                    }
+                    Hytils.instance.getConfig().equipmentHelperArmorResTierFavor = round(Hytils.instance.getConfig().equipmentHelperArmorResTierFavor, 2);
+                    break;
+                case 28:
+                    if (!Keyboard.isKeyDown(Keyboard.KEY_LMENU)) {
+                        if (Hytils.instance.getConfig().equipmentHelperArmorResLevelFavor >= 2f) {
+                            Hytils.instance.getConfig().equipmentHelperArmorResLevelFavor = 1f;
+                        } else {
+                            Hytils.instance.getConfig().equipmentHelperArmorResLevelFavor += 0.05D;
+                        }
+                    } else {
+                        if (Hytils.instance.getConfig().equipmentHelperArmorResLevelFavor <= 1f) {
+                            Hytils.instance.getConfig().equipmentHelperArmorResLevelFavor = 2f;
+                        } else {
+                            Hytils.instance.getConfig().equipmentHelperArmorResLevelFavor -= 0.05D;
+                        }
+                    }
+                    Hytils.instance.getConfig().equipmentHelperArmorResLevelFavor = round(Hytils.instance.getConfig().equipmentHelperArmorResLevelFavor, 2);
+                    break;
+                case 29:
+                    Hytils.instance.getConfig().equipmentHelperArmorDurabilityCheck = !Hytils.instance.getConfig().equipmentHelperArmorDurabilityCheck;
+                    break;
+                case 30:
+                    if (!Keyboard.isKeyDown(Keyboard.KEY_LMENU)) {
+                        if (Hytils.instance.getConfig().equipmentHelperArmorDurabilityFavor >= 2f) {
+                            Hytils.instance.getConfig().equipmentHelperArmorDurabilityFavor = 1f;
+                        } else {
+                            Hytils.instance.getConfig().equipmentHelperArmorDurabilityFavor += 0.05D;
+                        }
+                    } else {
+                        if (Hytils.instance.getConfig().equipmentHelperArmorDurabilityFavor <= 1f) {
+                            Hytils.instance.getConfig().equipmentHelperArmorDurabilityFavor = 2f;
+                        } else {
+                            Hytils.instance.getConfig().equipmentHelperArmorDurabilityFavor -= 0.05D;
+                        }
+                    }
+                    Hytils.instance.getConfig().equipmentHelperArmorDurabilityFavor = round(Hytils.instance.getConfig().equipmentHelperArmorDurabilityFavor, 2);
+                    break;
+                case 31:
+                    if (!Keyboard.isKeyDown(Keyboard.KEY_LMENU)) {
+                        if (Hytils.instance.getConfig().equipmentHelperArmorDurabilityTierFavor >= 2f) {
+                            Hytils.instance.getConfig().equipmentHelperArmorDurabilityTierFavor = 1f;
+                        } else {
+                            Hytils.instance.getConfig().equipmentHelperArmorDurabilityTierFavor += 0.05D;
+                        }
+                    } else {
+                        if (Hytils.instance.getConfig().equipmentHelperArmorDurabilityTierFavor <= 1f) {
+                            Hytils.instance.getConfig().equipmentHelperArmorDurabilityTierFavor = 2f;
+                        } else {
+                            Hytils.instance.getConfig().equipmentHelperArmorDurabilityTierFavor -= 0.05D;
+                        }
+                    }
+                    Hytils.instance.getConfig().equipmentHelperArmorDurabilityTierFavor = round(Hytils.instance.getConfig().equipmentHelperArmorDurabilityTierFavor, 2);
+                    break;
+
+                case 32:
+                    if (!Keyboard.isKeyDown(Keyboard.KEY_LMENU)) {
+                        if (Hytils.instance.getConfig().equipmentHelperArmorDurabilityLevelFavor >= 2f) {
+                            Hytils.instance.getConfig().equipmentHelperArmorDurabilityLevelFavor = 1f;
+                        } else {
+                            Hytils.instance.getConfig().equipmentHelperArmorDurabilityLevelFavor += 0.05D;
+                        }
+                    } else {
+                        if (Hytils.instance.getConfig().equipmentHelperArmorDurabilityLevelFavor <= 1f) {
+                            Hytils.instance.getConfig().equipmentHelperArmorDurabilityLevelFavor = 2f;
+                        } else {
+                            Hytils.instance.getConfig().equipmentHelperArmorDurabilityLevelFavor -= 0.05D;
+                        }
+                    }
+                    Hytils.instance.getConfig().equipmentHelperArmorDurabilityLevelFavor = round(Hytils.instance.getConfig().equipmentHelperArmorDurabilityLevelFavor, 2);
+                    break;
+                case 33:
+                    Hytils.instance.getConfig().equipmentHelperRodDurabilityCheck = !Hytils.instance.getConfig().equipmentHelperRodDurabilityCheck;
+                    break;
+                case 34:
+                    if (!Keyboard.isKeyDown(Keyboard.KEY_LMENU)) {
+                        if (Hytils.instance.getConfig().equipmentHelperRodDurabilityFavor >= 2f) {
+                            Hytils.instance.getConfig().equipmentHelperRodDurabilityFavor = 1f;
+                        } else {
+                            Hytils.instance.getConfig().equipmentHelperRodDurabilityFavor += 0.05D;
+                        }
+                    } else {
+                        if (Hytils.instance.getConfig().equipmentHelperRodDurabilityFavor <= 1f) {
+                            Hytils.instance.getConfig().equipmentHelperRodDurabilityFavor = 2f;
+                        } else {
+                            Hytils.instance.getConfig().equipmentHelperRodDurabilityFavor -= 0.05D;
+                        }
+                    }
+                    Hytils.instance.getConfig().equipmentHelperRodDurabilityFavor = round(Hytils.instance.getConfig().equipmentHelperRodDurabilityFavor, 2);
+                    break;
+                case 35:
                     Hytils.instance.getConfig().equipmentHelperRodKnockbackCheck = !Hytils.instance.getConfig().equipmentHelperRodKnockbackCheck;
+                    break;
+                case 36:
+                    if (!Keyboard.isKeyDown(Keyboard.KEY_LMENU)) {
+                        if (Hytils.instance.getConfig().equipmentHelperRodKnockbackFavor >= 2f) {
+                            Hytils.instance.getConfig().equipmentHelperRodKnockbackFavor = 1f;
+                        } else {
+                            Hytils.instance.getConfig().equipmentHelperRodKnockbackFavor += 0.05D;
+                        }
+                    } else {
+                        if (Hytils.instance.getConfig().equipmentHelperRodKnockbackFavor <= 1f) {
+                            Hytils.instance.getConfig().equipmentHelperRodKnockbackFavor = 2f;
+                        } else {
+                            Hytils.instance.getConfig().equipmentHelperRodKnockbackFavor -= 0.05D;
+                        }
+                    }
+                    Hytils.instance.getConfig().equipmentHelperRodKnockbackFavor = round(Hytils.instance.getConfig().equipmentHelperRodKnockbackFavor, 2);
                     break;
             }
             initGui();

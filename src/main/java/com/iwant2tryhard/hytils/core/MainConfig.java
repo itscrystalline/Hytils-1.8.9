@@ -33,30 +33,29 @@ public class MainConfig {
     public boolean equipmentHelperOnlyBestMode = true;
 
     public boolean equipmentHelperWeaponDamageCheck = true;
-    public double equipmentHelperWeaponDamageFavor = 1d;
-    public double equipmentHelperWeaponDamageTierFavor = 1d;
-    public double equipmentHelperWeaponDamageLevelFavor = 1d;
+    public float equipmentHelperWeaponDamageFavor = 1f;
+    public float equipmentHelperWeaponDamageTierFavor = 1f;
+    public float equipmentHelperWeaponDamageLevelFavor = 1f;
     public boolean equipmentHelperWeaponDurabilityCheck = true;
-    public double equipmentHelperWeaponDurabilityFavor = 1d;
-    public double equipmentHelperWeaponDurabilityTierFavor = 1d;
-    public double equipmentHelperWeaponDurabilityLevelFavor = 1d;
+    public float equipmentHelperWeaponDurabilityFavor = 1f;
+    public float equipmentHelperWeaponDurabilityTierFavor = 1f;
+    public float equipmentHelperWeaponDurabilityLevelFavor = 1f;
     public boolean equipmentHelperWeaponKnockbackCheck = true;
-    public double equipmentHelperWeaponKnockbackFavor = 1d;
+    public float equipmentHelperWeaponKnockbackFavor = 1f;
 
     public boolean equipmentHelperArmorResCheck = true;
-    public double equipmentHelperArmorResFavor = 1d;
-    public double equipmentHelperArmorResTierFavor = 1d;
-    public double equipmentHelperArmorResLevelFavor = 1d;
+    public float equipmentHelperArmorResFavor = 1f;
+    public float equipmentHelperArmorResTierFavor = 1f;
+    public float equipmentHelperArmorResLevelFavor = 1f;
     public boolean equipmentHelperArmorDurabilityCheck = true;
-    public double equipmentHelperArmorDurabilityFavor = 1d;
-    public double equipmentHelperArmorDurabilityTierFavor = 1d;
-    public double equipmentHelperArmorDurabilityLevelFavor = 1d;
+    public float equipmentHelperArmorDurabilityFavor = 1f;
+    public float equipmentHelperArmorDurabilityTierFavor = 1f;
+    public float equipmentHelperArmorDurabilityLevelFavor = 1f;
 
     public boolean equipmentHelperRodKnockbackCheck = true;
-    public double equipmentHelperRodKnockbackFavor = 1d;
+    public float equipmentHelperRodKnockbackFavor = 1f;
     public boolean equipmentHelperRodDurabilityCheck = true;
-    public double equipmentHelperRodDurabilityFavor = 1d;
-    public double equipmentHelperRodDurabilityLevelFavor = 1d;
+    public float equipmentHelperRodDurabilityFavor = 1f;
 
     public MainConfig(File configFile) {
         this.configFile = configFile;
@@ -116,7 +115,6 @@ public class MainConfig {
                 equipmentHelperRodKnockbackFavor = loadedConfig.get("equipmentHelperRodKnockbackFavor").getAsFloat();
                 equipmentHelperRodDurabilityCheck = loadedConfig.get("equipmentHelperRodDurabilityCheck").getAsBoolean();
                 equipmentHelperRodDurabilityFavor = loadedConfig.get("equipmentHelperRodDurabilityFavor").getAsFloat();
-                equipmentHelperRodDurabilityLevelFavor = loadedConfig.get("equipmentHelperRodDurabilityLevelFavor").getAsFloat();
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -174,7 +172,6 @@ public class MainConfig {
             loadedConfig.addProperty("equipmentHelperRodKnockbackFavor", equipmentHelperRodKnockbackFavor);
             loadedConfig.addProperty("equipmentHelperRodDurabilityCheck", equipmentHelperRodDurabilityCheck);
             loadedConfig.addProperty("equipmentHelperRodDurabilityFavor", equipmentHelperRodDurabilityFavor);
-            loadedConfig.addProperty("equipmentHelperRodDurabilityLevelFavor", equipmentHelperRodDurabilityLevelFavor);
             bufferedWriter.write(loadedConfig.toString());
             bufferedWriter.close();
             writer.close();

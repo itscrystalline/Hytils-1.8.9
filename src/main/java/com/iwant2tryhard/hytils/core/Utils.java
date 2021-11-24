@@ -671,8 +671,7 @@ public class Utils {
 
     public void getScoreMapForRods(Container inv) {
         rodScoreMap.clear();
-        double maxDurabilityScore = (6 * (((1f - Hytils.instance.getConfig().equipmentHelperRodDurabilityLevelFavor) / 2f) + 1f)) *
-                (((1f - Hytils.instance.getConfig().equipmentHelperRodDurabilityFavor) / 2f) + 1f) * 0.75f;
+        double maxDurabilityScore = (6 * (((1f - Hytils.instance.getConfig().equipmentHelperRodDurabilityFavor) / 2f) + 1f)) * 0.75f;
         double maxKnockbackScore = (4 * (((1f - Hytils.instance.getConfig().equipmentHelperRodKnockbackFavor) / 2f) + 1f));
         List<Slot> slots = inv.inventorySlots;
         for (int i = 0; i < slots.size(); i++) {
@@ -684,8 +683,7 @@ public class Utils {
                 int unbreakingLevel = getEnchantmentLevel(itemstack, Enchantment.unbreaking);
                 int knockbacklevel = getEnchantmentLevel(itemstack, Enchantment.knockback);
                 if (item == Items.fishing_rod) {
-                    double scoreDurabilityRaw = (unbreakingLevel * 2 * Hytils.instance.getConfig().equipmentHelperRodDurabilityLevelFavor) *
-                            Hytils.instance.getConfig().equipmentHelperRodDurabilityFavor * 0.5f;
+                    double scoreDurabilityRaw = (unbreakingLevel * 2 * Hytils.instance.getConfig().equipmentHelperRodDurabilityFavor) * 0.5f;
                     double scoreKnockbackRaw = (knockbacklevel * 2 * Hytils.instance.getConfig().equipmentHelperRodKnockbackFavor);
                     durabilityScore = (scoreDurabilityRaw / maxDurabilityScore) * 50f;
                     knockbackScore = (scoreKnockbackRaw / maxKnockbackScore) * 100f;

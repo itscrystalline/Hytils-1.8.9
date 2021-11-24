@@ -58,10 +58,10 @@ public class EquipmentHelper {
                                         Color color = new Color(255, 0, 0, 192);
                                         if (scaledScore <= 50f) {
                                             long scaledcolor = Math.round((scaledScore / 50f) * 255);
-                                            color = new Color(255, scaledcolor, 0, 192);
+                                            color = new Color(255, (int) (scaledcolor), 0, 192);
                                         } else if (scaledScore > 50f && scaledScore <= 100f) {
                                             long scaledcolor = Math.round(((scaledScore - 50f) / 50f) * 255);
-                                            color = new Color(255 - scaledcolor, 255, 0, 192);
+                                            color = new Color((int) (255 - scaledcolor), 255, 0, 192);
                                         }
                                         RenderUtils.drawColoredRect(slotX, slotY, slotX + 16, slotY + 16, Utils.GetColorIntValue(color), 50);
                                     } else {
@@ -91,10 +91,10 @@ public class EquipmentHelper {
                                         Color color = new Color(255, 0, 0, 192);
                                         if (scaledScore <= 50f) {
                                             long scaledcolor = Math.round((scaledScore / 50f) * 255);
-                                            color = new Color(255, scaledcolor, 0, 192);
+                                            color = new Color(255, (int) (scaledcolor), 0, 192);
                                         } else if (scaledScore > 50f) {
                                             long scaledcolor = Math.round(((scaledScore - 50f) / 50f) * 255);
-                                            color = new Color(255 - scaledcolor, 255, 0, 192);
+                                            color = new Color((int) (255 - scaledcolor), 255, 0, 192);
                                         }
                                         RenderUtils.drawColoredRect(slotX, slotY, slotX + 16, slotY + 16, Utils.GetColorIntValue(color), 50);
                                     } else {
@@ -125,10 +125,10 @@ public class EquipmentHelper {
                                         Color color = new Color(255, 0, 0, 192);
                                         if (scaledScore <= 50f) {
                                             long scaledcolor = Math.round((scaledScore / 50f) * 255);
-                                            color = new Color(255, scaledcolor, 0, 192);
+                                            color = new Color(255, (int) (scaledcolor), 0, 192);
                                         } else if (scaledScore > 50f) {
                                             long scaledcolor = Math.round(((scaledScore - 50f) / 50f) * 255);
-                                            color = new Color(255 - scaledcolor, 255, 0, 192);
+                                            color = new Color((int) (255 - scaledcolor), 255, 0, 192);
                                         }
                                         RenderUtils.drawColoredRect(slotX, slotY, slotX + 16, slotY + 16, Utils.GetColorIntValue(color), 50);
                                     } else {
@@ -159,10 +159,12 @@ public class EquipmentHelper {
                                         Color color = new Color(255, 0, 0, 192);
                                         if (scaledScore <= 50f) {
                                             long scaledcolor = Math.round((scaledScore / 50f) * 255);
-                                            color = new Color(255, scaledcolor, 0, 192);
+                                            System.out.println("scaledcolor: " + scaledcolor);
+                                            color = new Color(255, (int) (scaledcolor), 0, 192);
                                         } else if (scaledScore > 50f) {
                                             long scaledcolor = Math.round(((scaledScore - 50f) / 50f) * 255);
-                                            color = new Color(255 - scaledcolor, 255, 0, 192);
+                                            System.out.println("scaledcolor: " + scaledcolor);
+                                            color = new Color((int) (255 - scaledcolor), 255, 0, 192);
                                         }
                                         RenderUtils.drawColoredRect(slotX, slotY, slotX + 16, slotY + 16, Utils.GetColorIntValue(color), 50);
                                     } else {
@@ -193,10 +195,10 @@ public class EquipmentHelper {
                                         Color color = new Color(255, 0, 0, 192);
                                         if (scaledScore <= 50f) {
                                             long scaledcolor = Math.round((scaledScore / 50f) * 255);
-                                            color = new Color(255, scaledcolor, 0, 192);
+                                            color = new Color(255, (int) (scaledcolor), 0, 192);
                                         } else if (scaledScore > 50f) {
                                             long scaledcolor = Math.round(((scaledScore - 50f) / 50f) * 255);
-                                            color = new Color(255 - scaledcolor, 255, 0, 192);
+                                            color = new Color((int) (255 - scaledcolor), 255, 0, 192);
                                         }
                                         RenderUtils.drawColoredRect(slotX, slotY, slotX + 16, slotY + 16, Utils.GetColorIntValue(color), 50);
                                     } else {
@@ -226,10 +228,10 @@ public class EquipmentHelper {
                                             Color color = new Color(255, 0, 0, 192);
                                             if (scaledScore <= 50f) {
                                                 long scaledcolor = Math.round((scaledScore / 50f) * 255);
-                                                color = new Color(255, scaledcolor, 0, 192);
+                                                color = new Color(255, (int) (scaledcolor), 0, 192);
                                             } else if (scaledScore > 50f) {
                                                 long scaledcolor = Math.round(((scaledScore - 50f) / 50f) * 255);
-                                                color = new Color(255 - scaledcolor, 255, 0, 192);
+                                                color = new Color((int) (255 - scaledcolor), 255, 0, 192);
                                             }
                                             RenderUtils.drawColoredRect(slotX, slotY, slotX + 16, slotY + 16, Utils.GetColorIntValue(color), 50);
                                         } else {
@@ -260,10 +262,10 @@ public class EquipmentHelper {
                                             Color color = new Color(255, 0, 0, 192);
                                             if (scaledScore <= 50f) {
                                                 long scaledcolor = Math.round((scaledScore / 50f) * 255);
-                                                color = new Color(255, scaledcolor, 0, 192);
+                                                color = new Color(255, (int) (scaledcolor), 0, 192);
                                             } else if (scaledScore > 50f) {
                                                 long scaledcolor = Math.round(((scaledScore - 50f) / 50f) * 255);
-                                                color = new Color(255 - scaledcolor, 255, 0, 192);
+                                                color = new Color((int) (255 - scaledcolor), 255, 0, 192);
                                             }
                                             RenderUtils.drawColoredRect(slotX, slotY, slotX + 16, slotY + 16, Utils.GetColorIntValue(color), 50);
                                         } else {

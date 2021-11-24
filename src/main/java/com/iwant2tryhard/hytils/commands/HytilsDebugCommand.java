@@ -147,10 +147,24 @@ public class HytilsDebugCommand extends CommandBase {
                         }
                     } else if (args[1].equalsIgnoreCase("feet")) {
                         ConcurrentHashMap<Integer, Double> feet = new ConcurrentHashMap<>(Hytils.instance.getUtils().feetScoreMap);
+                        double maxFeetSize = Double.MIN_VALUE;
+                        for (Map.Entry<Integer, Double> mapItem : feet.entrySet()) {
+                            if (mapItem.getValue() > maxFeetSize) {
+                                maxFeetSize = mapItem.getValue();
+                            }
+                        }
                         Utils.sendMessage(new ChatComponentText(EnumChatFormatting.GOLD + "[Hytils] " +
                                 EnumChatFormatting.GREEN + "Feet Score Map: "));
                         for (Map.Entry<Integer, Double> entry : feet.entrySet()) {
                             Utils.sendMessage(new ChatComponentText(EnumChatFormatting.GOLD + "[Hytils]     " + EnumChatFormatting.GREEN + MessageFormat.format("Item Location: {0}, Score: {1}", entry.getKey(), entry.getValue())));
+                            double scaledScore = (entry.getValue() / maxFeetSize) * 100f;
+                            if (scaledScore <= 50f) {
+                                long scaledcolor = Math.round((scaledScore / 50f) * 255);
+                                Utils.sendMessage(new ChatComponentText(EnumChatFormatting.GOLD + "[Hytils]     " + EnumChatFormatting.GREEN + MessageFormat.format("Color: (0, {0}, 0, 192)", scaledcolor)));
+                            } else if (scaledScore > 50f) {
+                                long scaledcolor = Math.round(((scaledScore - 50f) / 50f) * 255);
+                                Utils.sendMessage(new ChatComponentText(EnumChatFormatting.GOLD + "[Hytils]     " + EnumChatFormatting.GREEN + MessageFormat.format("Color: ({0}, 0, 0, 192)", 255 - scaledcolor)));
+                            }
                         }
                     } else if (args[1].equalsIgnoreCase("swords")) {
                         ConcurrentHashMap<Integer, Double> swords = new ConcurrentHashMap<>(Hytils.instance.getUtils().swordScoreMap);
