@@ -22,6 +22,8 @@ import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
 import net.minecraftforge.client.event.ClientChatReceivedEvent;
 import net.minecraftforge.common.MinecraftForge;
+import org.lwjgl.input.Keyboard;
+import org.lwjgl.input.Mouse;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -519,6 +521,48 @@ public class Utils {
         int g = (value >> 8) & 0XFF;
         int b = value & 0XFF;
         return new BetterColor(r, g, b, a);
+    }
+
+    public static String getKeyName(int keyCode) {
+        if (keyCode == 0) {
+            return "NONE";
+        } else if (keyCode < 0) {
+            return "Button " + (keyCode + 101);
+        } else {
+            String keyName = Keyboard.getKeyName(keyCode);
+            if (keyName == null) {
+                keyName = "???";
+            } else if (keyName.equalsIgnoreCase("LMENU")) {
+                keyName = "LALT";
+            } else if (keyName.equalsIgnoreCase("RMENU")) {
+                keyName = "RALT";
+            }
+            return keyName;
+        }
+    }
+
+    public static boolean isKeyInvalid(int keyCode) {
+        return keyCode == 0;
+    }
+
+    public static boolean isKeyDown(int keyCode) {
+        if (isKeyInvalid(keyCode)) {
+            return false;
+        } else if (keyCode < 0) {
+            return Mouse.isButtonDown(keyCode + 100);
+        } else {
+            return Keyboard.isKeyDown(keyCode);
+        }
+    }
+
+    public static boolean isKeyPressed(int keyCode) {
+        if (isKeyInvalid(keyCode)) {
+            return false;
+        } else if (keyCode < 0) {
+            return Mouse.getEventButtonState() && Mouse.getEventButton() == keyCode + 100;
+        } else {
+            return Keyboard.getEventKeyState() && Keyboard.getEventKey() == keyCode;
+        }
     }
 
     public void getScoreMapForSwords(Container inv) {

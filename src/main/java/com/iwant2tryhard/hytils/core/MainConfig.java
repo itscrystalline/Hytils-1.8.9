@@ -57,6 +57,8 @@ public class MainConfig {
     public boolean equipmentHelperRodDurabilityCheck = true;
     public float equipmentHelperRodDurabilityFavor = 1f;
 
+    public boolean devMode = false;
+
     public MainConfig(File configFile) {
         this.configFile = configFile;
     }
@@ -115,6 +117,8 @@ public class MainConfig {
                 equipmentHelperRodKnockbackFavor = loadedConfig.get("equipmentHelperRodKnockbackFavor").getAsFloat();
                 equipmentHelperRodDurabilityCheck = loadedConfig.get("equipmentHelperRodDurabilityCheck").getAsBoolean();
                 equipmentHelperRodDurabilityFavor = loadedConfig.get("equipmentHelperRodDurabilityFavor").getAsFloat();
+
+                devMode = loadedConfig.get("devMode").getAsBoolean();
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -172,6 +176,8 @@ public class MainConfig {
             loadedConfig.addProperty("equipmentHelperRodKnockbackFavor", equipmentHelperRodKnockbackFavor);
             loadedConfig.addProperty("equipmentHelperRodDurabilityCheck", equipmentHelperRodDurabilityCheck);
             loadedConfig.addProperty("equipmentHelperRodDurabilityFavor", equipmentHelperRodDurabilityFavor);
+
+            loadedConfig.addProperty("devMode", devMode);
             bufferedWriter.write(loadedConfig.toString());
             bufferedWriter.close();
             writer.close();

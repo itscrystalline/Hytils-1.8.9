@@ -42,8 +42,7 @@ public class TeammateHUD extends Gui {
             cachedDisplayTeammates.clear();
 
             if (!Hytils.instance.getConfig().teammateHUDShowUndetected) {
-                for (int i = 0; i < displayTeammates.size(); i++) {
-                    String cachedName = displayTeammates.get(i);
+                for (String cachedName : displayTeammates) {
                     EntityPlayer comparePlayer = null;
                     for (EntityPlayer player : Hytils.instance.mc.theWorld.playerEntities) {
                         if (player.getDisplayNameString() != null) {

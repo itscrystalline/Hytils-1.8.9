@@ -18,20 +18,23 @@ import com.iwant2tryhard.hytils.gui.InCombatHUD;
 import com.iwant2tryhard.hytils.gui.OnScreenHUD;
 import com.iwant2tryhard.hytils.gui.TeammateHUD;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.settings.KeyBinding;
 import net.minecraftforge.client.ClientCommandHandler;
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.fml.client.registry.ClientRegistry;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventHandler;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
+import org.lwjgl.input.Keyboard;
 import org.lwjgl.opengl.Display;
 
 @Mod(modid = Hytils.MODID, version = Hytils.VERSION)
 public class Hytils
 {
     public static final String MODID = "hytils";
-    public static final String VERSION = "0.28a";
+    public static final String VERSION = "0.29a";
 
     @Mod.Instance(Hytils.MODID)
     public static Hytils instance;
@@ -67,10 +70,11 @@ public class Hytils
         ClientCommandHandler.instance.registerCommand(new ClearTeammatesCommand());
         ClientCommandHandler.instance.registerCommand(new ReDetectTeammatesCommand());
         ClientCommandHandler.instance.registerCommand(new HytilsDebugCommand());
+        ClientRegistry.registerKeyBinding(new KeyBinding("Show scores for all items", Keyboard.KEY_Z, "Equipment Helper"));
         utils.runLobbyCheckerTimer();
         config.loadConfig();
         discordRPC.start();
-        Display.setTitle("Hytils " + Hytils.VERSION + (Integer.parseInt(Hytils.VERSION.substring(2, Hytils.VERSION.length() - 1)) % 10f == 0 ? " - Release" : ""));
+        Display.setTitle("Hytils " + Hytils.VERSION + (Integer.parseInt(Hytils.VERSION.substring(2, Hytils.VERSION.length() - 1)) % 10f == 0 ? " - Release" : "") + (getConfig().devMode ? " (Debug Mode)" : ""));
         //HytilsDiscordRPCCore.startRPC();
         System.out.println("attempted to start discord rpc");
         Runtime.getRuntime().addShutdownHook(new Thread("shutdown") {

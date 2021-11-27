@@ -3,7 +3,7 @@
   "modid": "hytils",
   "name": "Hytils",
   "description": "Hypixel all-in-one QOL mod.",
-  "version": "0.22a",
+  "version": "0.29a",
   "mcversion": "${mcversion}",
   "url": "",
   "updateUrl": "",

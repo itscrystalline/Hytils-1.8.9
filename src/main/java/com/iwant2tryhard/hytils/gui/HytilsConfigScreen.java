@@ -26,6 +26,8 @@ public class HytilsConfigScreen extends GuiScreen {
     public void drawScreen(int mouseX, int mouseY, float partialTicks) {
         drawDefaultBackground();
         this.fontRendererObj.drawString(EnumChatFormatting.BOLD + "Hytils Settings", this.width / 2 - (this.fontRendererObj.getStringWidth("Hytils Settings") / 2), this.height / 10 - 30, 16777215);
+        if (Hytils.instance.getConfig().devMode)
+            this.fontRendererObj.drawString(EnumChatFormatting.BOLD + "Debug Mode", 0, 0, 16755200);
         if (page == 1) {
             this.fontRendererObj.drawString("Teammate HUD", this.width / 2 - (this.fontRendererObj.getStringWidth("Teammate HUD") / 2), (this.height / 7 * 2) - 10, 16777215);
         } else if (page == 2) {
